@@ -1,0 +1,7 @@
+parameters:
+#    tc_index.example.class: TC\IndexBundle\Example
+
+services:
+#    tc_index.example:
+#        class: %tc_index.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

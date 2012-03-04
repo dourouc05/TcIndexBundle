@@ -1,0 +1,1 @@
+Had to disable SASS things inside AdmingeneratorGeneratorBundle (delete usual views and replace them with their _assetic_less counterpart). Probably a bug in AdmingeneratorUserBundle. 
