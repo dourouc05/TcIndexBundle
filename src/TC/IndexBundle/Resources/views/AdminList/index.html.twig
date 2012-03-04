@@ -1,1 +1,165 @@
-{% extends_admingenerated "TCIndexBundle:AdminList:index.html.twig" %}
+
+{% extends "AdmingeneratorGeneratorBundle::base_admin_assetic_less.html.twig" %}
+
+{% block body %}
+    {% block page_title %}
+        <head>
+            <h1>List for IndexBundle</h1>
+        </head>
+    {% endblock %}
+<div class="main_content">
+
+        {% block list_scopes %}
+{% endblock %}
+{% block list_nbresults %}
+<div class="list_nbresults">
+    {% set count = Categorys.nbResults %}
+    {% set start = ( Categorys.currentPage - 1 ) * Categorys.maxPerPage + 1 %}
+    {% set end = start + Categorys.maxPerPage - 1 %}
+    {% set end = end > count ? count : end %}
+
+    {% if Categorys.haveToPaginate %}
+    {% trans from "Admingenerator" %}Display <b>%start%</b> - <b>%end%</b> of <b>%count%</b> results{% endtrans %}
+    {% elseif  count > 0  %}
+    {% trans from "Admingenerator" %}Display all <b>%count%</b> results{% endtrans %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+        <table>
+            {% block list_thead %}
+        <thead>
+            <tr class="list_thead">
+
+                                <th class="list_thead_column{% if 1 %} sortable{% if sortColumn == 'id' and sortOrder == 'ASC' %} sorted-asc{% elseif sortColumn == 'id' and sortOrder == 'DESC' %} sorted-desc{% endif %}{% endif %}">
+                    {% if sortColumn == 'id' and sortOrder == 'ASC' %}
+                            <a href="?sort=id&order_by=desc">
+                        {% else %}
+                            <a href="?sort=id&order_by=asc">
+                        {% endif %}
+                                Id
+                    </a>
+                        {% if sortColumn == 'id' %}
+                            <span class="arrow
+                            {% if sortColumn == 'id' and sortOrder == 'ASC' %}
+                                order_asc
+                            {% else %}
+                                order_desc
+                            {% endif %}
+                            "> </span>
+                        {% endif %}
+                    </th>
+                                                <th class="list_thead_column{% if 1 %} sortable{% if sortColumn == 'title' and sortOrder == 'ASC' %} sorted-asc{% elseif sortColumn == 'title' and sortOrder == 'DESC' %} sorted-desc{% endif %}{% endif %}">
+                    {% if sortColumn == 'title' and sortOrder == 'ASC' %}
+                            <a href="?sort=title&order_by=desc">
+                        {% else %}
+                            <a href="?sort=title&order_by=asc">
+                        {% endif %}
+                                Title
+                    </a>
+                        {% if sortColumn == 'title' %}
+                            <span class="arrow
+                            {% if sortColumn == 'title' and sortOrder == 'ASC' %}
+                                order_asc
+                            {% else %}
+                                order_desc
+                            {% endif %}
+                            "> </span>
+                        {% endif %}
+                    </th>
+                                <th class="actions">{% trans from "Admingenerator" %}list.actions{% endtrans %}</th>
+                </tr>
+        </thead>
+{% endblock %}
+{% block list_tbody %}
+    <tbody>
+        {% if Categorys|length > 0 %}
+
+        {% for Category in Categorys %}
+        <tr class="list_trow">{% block list_row %}
+                    <td>
+                    {% block list_td_column_id %}{{ Category.id }}{% endblock %}
+                </td>
+                        <td>
+                    {% block list_td_column_title %}{{ Category.title }}{% endblock %}
+                </td>
+        {% endblock %}
+    {% block list_object_actions %}
+                 <td class="actions">
+                            
+                <a class="edit" href="{{ path("TC_IndexBundle_Admin_edit", { 'id': Category.id }) }}" > </a>
+
+                                            
+                <a class="delete" href="{{ path("TC_IndexBundle_Admin_delete", { 'id': Category.id }) }}" > </a>
+
+                                     </td>
+        {% endblock %}
+
+        </tr>
+        {% endfor %}
+
+        {% else %}
+        <tr class="list_trow no_results_row">
+            <td colspan="1">{% trans from "Admingenerator" %}list.no_results{% endtrans %}</td>
+        </tr>
+        {% endif %}
+    </tbody>
+{% endblock %}
+
+        </table>
+
+{% block list_actions %}
+         <ul class="actions">
+                    
+            <li><a class="new" href="{{ path("TC_IndexBundle_Admin_new") }}">{% trans from "Admingenerator" %}New{% endtrans %}</a></li>
+
+                            </ul>
+    {% endblock %}
+
+    </div>
+    {% block filters %}
+                <div class="filters">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{% trans from "Admingenerator" %}list.filters{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{% block list_filters %}
+<form action="{{ path("TC_IndexBundle_Admin_filters") }}" method="post" {{ form_enctype(form) }}>
+    <fieldset class="form_block form_fieldset_NONE">
+        {{ form_errors(form) }}
+                         <div class="form_row">
+             <div class="form_field">
+                {{ form_label(form['id'], 'Id' ) }}
+                {{ form_widget(form['id']) }}
+                {{ form_errors(form['id']) }}
+            </div>
+        </div>
+                                 <div class="form_row">
+             <div class="form_field">
+                {{ form_label(form['title'], 'Title' ) }}
+                {{ form_widget(form['title']) }}
+                {{ form_errors(form['title']) }}
+            </div>
+        </div>
+                        <ul class="actions">
+            <li>
+                 {{ form_rest(form) }}
+                 <input type="submit" class="submit_button" value="{% trans from "Admingenerator" %}list.filter.btn_filter{% endtrans %}" />
+                 <input type="submit" class="reset_button" name="reset" value="{% trans from "Admingenerator" %}list.filter.btn_reset{% endtrans %}" />
+            </li>
+        </ul>
+    </fieldset>
+</form>
+{% endblock %}
+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+            {% endblock %}
+{% endblock %}
