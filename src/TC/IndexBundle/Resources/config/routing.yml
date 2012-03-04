@@ -1,3 +1,8 @@
 TCIndexBundle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: TCIndexBundle:Default:index }
+
+_admindemo:
+    resource: "@TCIndexBundle/Controller/Admin/"
+    type:     admingenerator
+    prefix:   /admin-demo
