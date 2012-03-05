@@ -97,6 +97,7 @@
 [WhiteOctoberPagerfantaBundle]
     git=http://github.com/whiteoctober/WhiteOctoberPagerfantaBundle.git
     target=/bundles/WhiteOctober/PagerfantaBundle
+    version=origin/symfony2.0
 
 [doctrine-fixtures]
     git=http://github.com/doctrine/data-fixtures.git

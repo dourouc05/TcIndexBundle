@@ -28,6 +28,14 @@ class Category
      */
     private $title;
 
+    /**
+     * @var integer $position
+     *
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
+
+
 
     /**
      * Get id
@@ -57,5 +65,25 @@ class Category
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $title
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

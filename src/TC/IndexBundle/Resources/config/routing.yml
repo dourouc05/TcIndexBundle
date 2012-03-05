@@ -2,7 +2,7 @@ TCIndexBundle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: TCIndexBundle:Default:index }
 
-_admindemo:
-    resource: "@TCIndexBundle/Controller/Admin/"
+admin_category:
+    resource: "@TCIndexBundle/Controller/Category/"
     type:     admingenerator
-    prefix:   /admin-demo
+    prefix:   /index/category
