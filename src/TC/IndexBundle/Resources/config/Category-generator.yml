@@ -9,7 +9,7 @@ builders:
   list:
     params:
       title: List for IndexBundle
-      display: ~
+      display: [title, position, parent]
       actions:
         new: ~
       object_actions:
@@ -17,17 +17,17 @@ builders:
         delete: ~
   filters:
     params:
-      display: ~
+      display: [title, position, parent]
   new:
     params:
       title: New object for IndexBundle
-      display: ~
+      display: [title, position, parent]
       actions:
         list: ~
   edit:
     params:
       title: You're editing the object "{{ Category.title }}"
-      display: ~
+      display: [title, position, parent]
       actions:
         list: ~
   delete: ~

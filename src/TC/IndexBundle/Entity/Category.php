@@ -15,7 +15,7 @@ class Category
     /**
      * @var integer $id
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,18 +24,36 @@ class Category
     /**
      * @var string $title
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
      * @var integer $position
      *
-     * @ORM\Column(name="position", type="integer")
+     * @ORM\Column(type="integer")
      */
     private $position;
+	
+	/** 
+	 * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+	 */ 
+	private $children; 
+	
+	/**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     */
+    private $parent;
 
 
+    public function __construct() {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+	
+	public function __toString() {
+		return $this->title; 
+	}
+	
 
     /**
      * Get id
@@ -85,5 +103,25 @@ class Category
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param Category $parent
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return Category
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
