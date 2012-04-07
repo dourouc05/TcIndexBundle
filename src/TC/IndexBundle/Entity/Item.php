@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TC\IndexBundle\Entity\Item
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Item
@@ -15,7 +14,7 @@ class Item
     /**
      * @var integer $id
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,18 +23,30 @@ class Item
     /**
      * @var string $title
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
      * @var string $url
      *
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $url;
 
+    /**
+     * @var string $synopsis
+     *
+     * @ORM\Column(type="text")
+     */
+    private $synopsis;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="items")
+     */
+    private $category;
+	
+	
     /**
      * Get id
      *
@@ -84,5 +95,45 @@ class Item
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * Set synopsis
+     *
+     * @param text synopsis
+     */
+    public function setSynopsis($synopsis)
+    {
+        $this->synopsis = $synopsis;
+    }
+
+    /**
+     * Get synopsis
+     *
+     * @return text
+     */
+    public function getSynopsis()
+    {
+        return $this->synopsis;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Category category
+     */
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

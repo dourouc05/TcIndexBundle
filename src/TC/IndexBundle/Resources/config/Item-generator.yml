@@ -1,0 +1,33 @@
+generator: admingenerator.generator.doctrine
+params:
+  model: TC\IndexBundle\Entity\Item
+  namespace_prefix: TC
+  bundle_name: IndexBundle
+  fields: ~
+
+builders:
+  list:
+    params:
+      title: List for IndexBundle
+      display: [title, url, synopsis, category]
+      actions:
+        new: ~
+      object_actions:
+        edit: ~
+        delete: ~
+  filters:
+    params:
+      display: ~
+  new:
+    params:
+      title: New object for IndexBundle
+      display: [title, url, synopsis, category]
+      actions:
+        list: ~
+  edit:
+    params:
+      title: You're editing the object "{{ Item.title }}"
+      display: [title, url, synopsis, category]
+      actions:
+        list: ~
+  delete: ~

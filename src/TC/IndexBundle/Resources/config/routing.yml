@@ -5,4 +5,9 @@ TCIndexBundle_homepage:
 admin_category:
     resource: "@TCIndexBundle/Controller/Category/"
     type:     admingenerator
-    prefix:   /index/category
+    prefix:   /index/admin/category
+
+admin_item:
+    resource: "@TCIndexBundle/Controller/Item/"
+    type:     admingenerator
+    prefix:   /index/admin/item

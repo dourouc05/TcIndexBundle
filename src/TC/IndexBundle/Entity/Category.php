@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TC\IndexBundle\Entity\Category
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Category
@@ -29,6 +28,15 @@ class Category
     private $title;
 
     /**
+     * @var integer $depth
+     *
+     * Used to indicate the depth in the category tree (automatically handled). 
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $depth;
+
+    /**
      * @var integer $position
      *
      * @ORM\Column(type="integer")
@@ -44,15 +52,26 @@ class Category
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
      */
     private $parent;
+	
+	/** 
+	 * @ORM\OneToMany(targetEntity="Item", mappedBy="category")
+	 */ 
+	private $items; 
 
 
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->items    = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->position = 0; 
+		$this->depth    = 1; 
     }
 	
 	public function __toString() {
 		return $this->title; 
 	}
+    
+    public function prePersist() {
+    }
 	
 
     /**
@@ -78,11 +97,21 @@ class Category
     /**
      * Get title
      *
+     * @param boolean $prefixed Should the title be prefixed according to depth (adding --)? 
      * @return string 
      */
-    public function getTitle()
+    public function getTitle($prefixed = true)
     {
-        return $this->title;
+        if($prefixed) {
+            $p = ''; 
+            for($i = 0; $i < $this->depth; ++$i) {
+                // Alt+0151 and Alt+0160 (emdash and nbsp). File must be encoded in UTF8 w/o BOM. 
+                $p .= '— '; 
+            }
+            return $p . $this->title;
+        } else {
+            return $this->title;
+        }
     }
 
     /**
@@ -110,7 +139,7 @@ class Category
      *
      * @param Category $parent
      */
-    public function setParent($parent)
+    public function setParent(Category $parent)
     {
         $this->parent = $parent;
     }
@@ -123,5 +152,35 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Get items
+     *
+     * @return Item[]
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * Get depth
+     *
+     * @return integer
+     */
+    public function getDepth()
+    {
+        return $this->depth;
+    }
+    
+    /**
+     * Set parent
+     *
+     * @param Category $parent
+     */
+    private function setDepth($depth)
+    {
+        $this->depth = $depth;
     }
 }
