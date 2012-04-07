@@ -9,7 +9,7 @@ builders:
   list:
     params:
       title: List for IndexBundle
-      display: [title, position, parent]
+      display: [title, position, parent, depth]
       actions:
         new: ~
       object_actions:
@@ -17,7 +17,7 @@ builders:
         delete: ~
   filters:
     params:
-      display: [title, position, parent]
+      display: [title, parent]
   new:
     params:
       title: New object for IndexBundle

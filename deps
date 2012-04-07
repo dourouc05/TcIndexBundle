@@ -1,10 +1,10 @@
 [symfony]
     git=http://github.com/symfony/symfony.git
-    version=v2.0.11
+    version=v2.0.12
 
 [twig]
     git=http://github.com/fabpot/Twig.git
-    version=v1.6.1
+    version=v1.6.2
 
 [monolog]
     git=http://github.com/Seldaek/monolog.git
@@ -28,14 +28,13 @@
 
 [assetic]
     git=http://github.com/kriswallsmith/assetic.git
-    version=v1.0.2
+    version=v1.0.3
 
 [twig-extensions]
     git=http://github.com/fabpot/Twig-extensions.git
 
 [metadata]
     git=http://github.com/schmittjoh/metadata.git
-
 	
 [SensioFrameworkExtraBundle]
     git=http://github.com/sensio/SensioFrameworkExtraBundle.git
@@ -45,7 +44,7 @@
 [JMSSecurityExtraBundle]
     git=http://github.com/schmittjoh/JMSSecurityExtraBundle.git
     target=/bundles/JMS/SecurityExtraBundle
-
+	version=1.1.0
 	
 [JMSAopBundle]
 	git=http://github.com/schmittjoh/JMSAopBundle.git

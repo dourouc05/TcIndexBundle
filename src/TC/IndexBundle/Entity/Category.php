@@ -30,7 +30,7 @@ class Category
     /**
      * @var integer $depth
      *
-     * Used to indicate the depth in the category tree (automatically handled). 
+     * Private variable, used to indicate the depth in the category tree (automatically handled). 
      *
      * @ORM\Column(type="integer")
      */
@@ -100,7 +100,7 @@ class Category
      * @param boolean $prefixed Should the title be prefixed according to depth (adding --)? 
      * @return string 
      */
-    public function getTitle($prefixed = true)
+    public function getTitle($prefixed = false)
     {
         if($prefixed) {
             $p = ''; 
