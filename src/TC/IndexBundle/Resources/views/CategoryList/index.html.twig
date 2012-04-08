@@ -1,5 +1,43 @@
 {% extends_admingenerated "TCIndexBundle:CategoryList:index.html.twig" %}
 
-{% block list_td_column_title %}{{ Category.getTitle(true) }}{% endblock %}
+{# block list_td_column_title %}{{ Category.getTitle(true) }}{% endblock #}
 
-{% block list_tbody %}{% Et on s'amuse ! Il faut réécrire ici toute la logique pour qu'on affiche correctement les catégories : d'abord les catégories de premier niveau, puis les catégories de niveau inférieur, etc., de manière récursive %}{% endblock %}
+{% block list_tbody %}
+{# Et on s'amuse ! Il faut rÃ©Ã©crire ici toute la logique pour qu'on affiche correctement les catÃ©gories : d'abord les catÃ©gories de premier niveau, puis les catÃ©gories de niveau infÃ©rieur, etc., de maniÃ¨re rÃ©cursive #}
+<tbody>
+    {% if Categorys|length > 0 %}
+
+    {% for Category in Categorys %}
+    <tr class="list_trow">
+        {% block list_row %}
+            <td>
+                {% block list_td_column_title %}{{ Category.getTitle(true) }}{% endblock %}
+            </td>
+            <td>
+                {% block list_td_column_position %}{{ Category.position }}{% endblock %}
+            </td>
+            <td>
+                {% block list_td_column_parent %}{{ Category.parent }}{% endblock %}
+            </td>
+            <td>
+                {% block list_td_column_depth %}{{ Category.depth }}{% endblock %}
+            </td>
+        {% endblock %}
+        {% block list_object_actions %}
+            <td class="actions">
+                <a class="edit" href="{{ path("TC_IndexBundle_Category_edit", { 'pk': Category.id }) }}" > </a>
+                <a class="delete" href="{{ path("TC_IndexBundle_Category_delete", { 'pk': Category.id }) }}" > </a>
+            </td>
+        {% endblock %}
+    </tr>
+    {% endfor %}
+
+    {% else %}
+    
+    <tr class="list_trow no_results_row">
+        <td colspan="5">{% trans from "Admingenerator" %}list.no_results{% endtrans %}</td>
+    </tr>
+    
+    {% endif %}
+</tbody>
+{% endblock %}

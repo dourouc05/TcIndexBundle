@@ -63,7 +63,7 @@ class Category
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->items    = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->position = 0; 
-		$this->depth    = 1; 
+		$this->depth    = 0; 
     }
 	
 	public function __toString() {
@@ -71,6 +71,9 @@ class Category
 	}
     
     public function prePersist() {
+        if(is_object($this->parent)) {
+            $this->depth = $this->parent->depth + 1; 
+        }
     }
 	
 
