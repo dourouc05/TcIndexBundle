@@ -17,7 +17,6 @@ class Category
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\HasLifecycleCallbacks
      */
     private $id;
 
@@ -71,8 +70,8 @@ class Category
 		return $this->title; 
 	}
     
-    /** @PrePersist */
-    public function prePersist() {
+    // Explicitely called by the listener. 
+    public function prePersist($em) {
         // Handle depth subtleties (the child has a depth one unit greater than its parent, when it has one). 
         if(is_object($this->parent)) {
             $this->depth = $this->parent->depth + 1; 
@@ -80,7 +79,18 @@ class Category
         
         // Handle position subtleties: if position is not set yet (-1), let's check what's in the table and take 
         // the next one. If it is set, don't touch unless the user wants to (handled by other methods)! 
-        if($this->depth < 0) {
+        if($this->position < 0) {
+            $em->flush(); // Required for the request to work. 
+            
+            // WHERE ... = NULL is not valid DQL. 
+            if($this->parent == NULL) {
+                $q = $em->createQuery('SELECT COUNT(c) FROM TCIndexBundle:Category c WHERE c.parent IS NULL AND c.position > -1'); 
+            } else {
+                $q = $em->createQuery('SELECT COUNT(c) FROM TCIndexBundle:Category c WHERE c.parent = :parent AND c.position > -1')
+                        ->setParameter('parent', $this->parent); 
+            }
+            
+            $this->position = (int) $q->getSingleScalarResult(); 
         }
     }
 	

@@ -1,0 +1,23 @@
+{% for Category in Categories %}
+    {% if Category.depth is sameas(depth) %}
+        <tr class="list_trow">
+            {% block list_row %}
+                <td>
+                    {% block list_td_column_title %}{{ Category.getTitle(true) }}{% endblock %}
+                </td>
+                <td>
+                    {% block list_td_column_position %}{{ Category.position }}{% endblock %}
+                </td>
+            {% endblock %}
+            
+            {% block list_object_actions %}
+                <td class="actions">
+                    <a class="edit" href="{{ path("TC_IndexBundle_Category_edit", { 'pk': Category.id }) }}" > </a>
+                    <a class="delete" href="{{ path("TC_IndexBundle_Category_delete", { 'pk': Category.id }) }}" > </a>
+                </td>
+            {% endblock %}
+        </tr>
+        
+        {% include "TCIndexBundle:CategoryList:line.html.twig" with {'Categories': Category.children, 'depth': depth + 1} %}
+    {% endif %}
+{% endfor %}
