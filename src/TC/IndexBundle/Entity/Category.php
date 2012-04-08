@@ -42,6 +42,12 @@ class Category
      * @ORM\Column(type="integer")
      */
     private $position;
+    // NO ORM! Simple variable indicating what to do when persisting about position (push one level higher or lower). 
+    // The reason to do it when persisting is you have the EM. It is not possible to be pushed more than one level. 
+    //   -: go below. 
+    //   0: don't move. 
+    //   +: go above. 
+    private $positionPush = 0; 
 	
 	/** 
 	 * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
@@ -72,6 +78,8 @@ class Category
     
     // Explicitely called by the listener. 
     public function prePersist($em) {
+        $em->flush(); // Required for the requests to work. 
+        
         // Handle depth subtleties (the child has a depth one unit greater than its parent, when it has one). 
         if(is_object($this->parent)) {
             $this->depth = $this->parent->depth + 1; 
@@ -80,7 +88,6 @@ class Category
         // Handle position subtleties: if position is not set yet (-1), let's check what's in the table and take 
         // the next one. If it is set, don't touch unless the user wants to (handled by other methods)! 
         if($this->position < 0) {
-            $em->flush(); // Required for the request to work. 
             
             // WHERE ... = NULL is not valid DQL. 
             if($this->parent == NULL) {
@@ -91,6 +98,34 @@ class Category
             }
             
             $this->position = (int) $q->getSingleScalarResult(); 
+        }
+        
+        // Change positions. 
+        if($this->positionPush != 0) {
+            // Prepare the common part of the request. 
+            if($this->parent == NULL) {
+                $q = $em->createQuery('SELECT COUNT(c) FROM TCIndexBundle:Category c WHERE c.parent IS NULL AND c.position = :pos'); 
+            } else {
+                $q = $em->createQuery('SELECT COUNT(c) FROM TCIndexBundle:Category c WHERE c.parent = :parent AND c.position = :pos')
+                        ->setParameter('parent', $this->parent); 
+            }
+        
+            // Push me above
+            if($this->positionPush > 0 && $this->position != 0) {
+                // Get the one above, exchange positions. 
+                $this->positionPush = 0; 
+                $q = $q->setParameter('pos', $this->position - 1)
+                       ->getSingleResult(); 
+                $q->position = $this->position; 
+                $this->position += 1; 
+                $em->persist($q); 
+                $em->persist($this); 
+            }
+            
+            // Push me below
+            else {
+                // Get the one below, exchange positions. 
+            }
         }
     }
 	
@@ -140,7 +175,7 @@ class Category
      *
      * @param integer $title
      */
-    public function setPosition($position)
+    private function setPosition($position)
     {
         $this->position = $position;
     }
@@ -153,6 +188,14 @@ class Category
     public function getPosition()
     {
         return $this->position;
+    }
+    
+    public function pushAbove() {
+        $this->position = 1;
+    }
+    
+    public function pushBelow() {
+        $this->position = -1;
     }
 
     /**
