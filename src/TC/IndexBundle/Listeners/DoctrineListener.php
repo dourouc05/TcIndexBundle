@@ -10,8 +10,8 @@ class DoctrineListener
     {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
-        
-        // For categories: must handle depth changes. 
+        return;
+        // For categories: must handle depth and position changes. 
         if ($entity instanceof \TC\IndexBundle\Entity\Category) {
             $entity->prePersist(); 
         }

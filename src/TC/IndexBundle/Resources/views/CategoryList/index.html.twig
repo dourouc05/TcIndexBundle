@@ -3,7 +3,7 @@
 {# block list_td_column_title %}{{ Category.getTitle(true) }}{% endblock #}
 
 {% block list_tbody %}
-{# Et on s'amuse ! Il faut réécrire ici toute la logique pour qu'on affiche correctement les catégories : d'abord les catégories de premier niveau, puis les catégories de niveau inférieur, etc., de manière récursive #}
+{# Et on s'amuse ! Il faut réécrire ici toute la logique pour qu'on affiche correctement les catégories : d'abord les catégories de premier niveau, puis les catégories de niveau inférieur, etc., de manière récursive. #}
 <tbody>
     {% if Categorys|length > 0 %}
         {% include "TCIndexBundle:CategoryList:line.html.twig" with {'Categories': Categorys, 'depth': 0} %}

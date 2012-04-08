@@ -17,6 +17,7 @@ class Category
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\HasLifecycleCallbacks
      */
     private $id;
 
@@ -62,7 +63,7 @@ class Category
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->items    = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->position = 0; 
+		$this->position = -1; 
 		$this->depth    = 0; 
     }
 	
@@ -70,9 +71,16 @@ class Category
 		return $this->title; 
 	}
     
+    /** @PrePersist */
     public function prePersist() {
+        // Handle depth subtleties (the child has a depth one unit greater than its parent, when it has one). 
         if(is_object($this->parent)) {
             $this->depth = $this->parent->depth + 1; 
+        }
+        
+        // Handle position subtleties: if position is not set yet (-1), let's check what's in the table and take 
+        // the next one. If it is set, don't touch unless the user wants to (handled by other methods)! 
+        if($this->depth < 0) {
         }
     }
 	
