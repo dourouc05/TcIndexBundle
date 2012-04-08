@@ -28,6 +28,26 @@ class LoadCategoryData implements FixtureInterface
         $c4->setTitle('42_c_c_c');
         $c4->setParent($c3); 
         $manager->persist($c4);
+        
+        $d = new Category();
+        $d->setTitle('84');
+        $manager->persist($d);
+		
+        $d2 = new Category();
+        $d2->setTitle('84_c');
+        $d2->setParent($d); 
+        $manager->persist($d2);
+        
+        // Let's test when children do not follow parent. 
+        $c5 = new Category();
+        $c5->setTitle('42_c_c_d');
+        $c5->setParent($c3); 
+        $manager->persist($c5);
+		
+        $c6 = new Category();
+        $c6->setTitle('42_c_c_c_c');
+        $c6->setParent($c4); 
+        $manager->persist($c6);
 		
         $manager->flush();
     }

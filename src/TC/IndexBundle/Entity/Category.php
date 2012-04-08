@@ -158,6 +158,16 @@ class Category
     }
 
     /**
+     * Get children
+     *
+     * @return Category
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
      * Get items
      *
      * @return Item[]
