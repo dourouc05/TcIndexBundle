@@ -51,6 +51,7 @@ class Category
 	
 	/** 
 	 * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     * @ORM\OrderBy({"position" = "ASC"})
 	 */ 
 	private $children; 
 	
