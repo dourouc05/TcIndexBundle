@@ -7,7 +7,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 class DoctrineListener
 {
     public function prePersist(LifecycleEventArgs $args)
-    {
+    {var_dump(1);
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
         

@@ -55,7 +55,7 @@ class Category
 	private $children; 
 	
 	/**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children", fetch="EAGER")
      */
     private $parent;
 	
@@ -73,7 +73,7 @@ class Category
     }
 	
 	public function __toString() {
-		return $this->title; 
+		return (string) $this->title; 
 	}
     
     // Explicitely called by the listener. 
@@ -104,28 +104,42 @@ class Category
         if($this->positionPush != 0) {
             // Prepare the common part of the request. 
             if($this->parent == NULL) {
-                $q = $em->createQuery('SELECT COUNT(c) FROM TCIndexBundle:Category c WHERE c.parent IS NULL AND c.position = :pos'); 
+                $q = $em->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.parent IS NULL AND c.position = :pos'); 
             } else {
-                $q = $em->createQuery('SELECT COUNT(c) FROM TCIndexBundle:Category c WHERE c.parent = :parent AND c.position = :pos')
+                $q = $em->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.parent = :parent AND c.position = :pos')
                         ->setParameter('parent', $this->parent); 
             }
         
             // Push me above
-            if($this->positionPush > 0 && $this->position != 0) {
+            if($this->positionPush > 0 && $this->position > 0) {
                 // Get the one above, exchange positions. 
-                $this->positionPush = 0; 
-                $q = $q->setParameter('pos', $this->position - 1)
-                       ->getSingleResult(); 
-                $q->position = $this->position; 
-                $this->position += 1; 
-                $em->persist($q); 
-                $em->persist($this); 
+                // This request could fail: there may be no other item. 
+                try {
+                    $q = $q->setParameter('pos', $this->position - 1)
+                           ->getSingleResult(); 
+                }
+                catch(\Exception $e) { return; }
+                $this->position -= 1; 
+                $q->position    += 1; 
             }
             
             // Push me below
             else {
-                // Get the one below, exchange positions. 
+                // Get the one below, exchange positions.
+                // This request may fail: there may not be any item lower. 
+                try {
+                    $q = $q->setParameter('pos', $this->position + 1)
+                           ->getSingleResult(); 
+                }
+                catch(\Exception $e) { return; }
+                $this->position += 1; 
+                $q->position    -= 1; 
             }
+            
+            $this->positionPush = 0; 
+            $em->persist($q); 
+            $em->persist($this); 
+            $em->flush(); 
         }
     }
 	
@@ -191,11 +205,11 @@ class Category
     }
     
     public function pushAbove() {
-        $this->position = 1;
+        $this->positionPush = 1;
     }
     
     public function pushBelow() {
-        $this->position = -1;
+        $this->positionPush = -1;
     }
 
     /**

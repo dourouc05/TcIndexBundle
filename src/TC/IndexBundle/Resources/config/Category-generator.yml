@@ -15,6 +15,10 @@ builders:
       object_actions:
         edit: ~
         delete: ~
+        up: 
+          label: Move up
+        down: 
+          label: Move down
   filters:
     params:
       display: [title, parent]

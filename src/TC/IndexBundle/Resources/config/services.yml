@@ -6,7 +6,7 @@ services:
 #        class: %tc_index.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 
-    my.listener:
+    tc_index.listener:
         class: TC\IndexBundle\Listeners\DoctrineListener
         tags:
             - { name: doctrine.event_listener, event: prePersist, method: prePersist }

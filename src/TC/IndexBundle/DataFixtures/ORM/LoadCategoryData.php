@@ -54,10 +54,5 @@ class LoadCategoryData implements FixtureInterface
         $manager->persist($c6);
 		
         $manager->flush();
-        
-        // Let's test position exchange. 
-        $c5->pushAbove(); 
-        $manager->persist($c5);
-        $manager->flush();
     }
 }
