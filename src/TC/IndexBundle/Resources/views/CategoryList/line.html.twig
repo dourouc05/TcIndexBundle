@@ -3,10 +3,7 @@
         <tr class="list_trow">
             {% block list_row %}
                 <td>
-                    {% block list_td_column_title %}{{ Category.getTitle(true) }}{% endblock %}
-                </td>
-                <td>
-                    {% block list_td_column_position %}{{ Category.position }}{% endblock %}
+                    {% block list_td_column_title %}<a style="text-decoration: none; color: black;" href="{{ path("TC_IndexBundle_Category_edit", { 'pk': Category.id }) }}" >{{ Category.getTitle(true) }}</a>{% endblock %}
                 </td>
             {% endblock %}
             
