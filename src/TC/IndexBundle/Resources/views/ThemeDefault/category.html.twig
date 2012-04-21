@@ -1,0 +1,21 @@
+{% if category.title %}
+    <h{{ category.depth + 1 }}>{{category.title}}</h{{ category.depth + 1 }}>
+{% endif %}
+
+{% if category.text %}
+    {{ category.text | raw }}
+{% endif %}
+
+{% if category.items %}
+    <ul>
+    {% for item in category.items %}
+        {% include "TCIndexBundle:ThemeDefault:item.html.twig" with {'item': item} %}
+    {% endfor %}
+    <ul>
+{% endif %}
+
+{% if category.children %}
+    {% for child in category.children %}
+        {% include "TCIndexBundle:ThemeDefault:category.html.twig" with {'category': child} %}
+    {% endfor %}
+{% endif %}
