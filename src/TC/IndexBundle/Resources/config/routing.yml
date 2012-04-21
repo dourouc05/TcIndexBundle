@@ -1,5 +1,5 @@
 TCIndexBundle_homepage:
-    pattern:  /hello/{name}
+    pattern:  /
     defaults: { _controller: TCIndexBundle:Default:index }
 
 admin_category:

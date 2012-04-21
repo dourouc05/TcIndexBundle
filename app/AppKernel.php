@@ -25,6 +25,7 @@ class AppKernel extends Kernel
 			new FOS\UserBundle\FOSUserBundle(),
 			new Admingenerator\UserBundle\AdmingeneratorUserBundle(), 
             new TC\IndexBundle\TCIndexBundle(),
+            new Dvp\GabaritBundle\DvpGabaritBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

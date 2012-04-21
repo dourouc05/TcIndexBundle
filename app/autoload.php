@@ -24,6 +24,7 @@ $loader->registerNamespaces(array(
     'TwigGenerator'    => __DIR__.'/../vendor/twig-generator/src',
 	'CG'               => __DIR__.'/../vendor/cg-library/src',
 	'FOS'              => __DIR__.'/../vendor/bundles',
+	'Dvp'              => __DIR__.'/../vendor/bundles',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

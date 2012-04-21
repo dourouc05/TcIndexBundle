@@ -43,6 +43,7 @@ class Item
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="items")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     private $category;
 	
