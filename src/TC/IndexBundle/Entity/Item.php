@@ -30,14 +30,14 @@ class Item
     /**
      * @var string $url
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $url;
 
     /**
      * @var string $synopsis
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $synopsis;
 

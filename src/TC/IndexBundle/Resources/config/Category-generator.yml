@@ -3,35 +3,41 @@ params:
   model: TC\IndexBundle\Entity\Category
   namespace_prefix: TC
   bundle_name: IndexBundle
-  fields: ~
+  fields: 
+    text:
+      label: Shown text (may be HTML)
+  max_per_page: 50
 
 builders:
   list:
     params:
-      title: List for IndexBundle
-      display: [title]
+      title: Categories List
+      display: [title, order]
       actions:
         new: ~
       object_actions:
         edit: ~
-        delete: ~
+        delete: 
+          confirm: This will delete child categories if any. 
         up: 
           label: Move up
+          route: category_mover_up
         down: 
           label: Move down
+          route: category_mover_down
   filters:
-    params:
-      display: [title]
+    params:  
+      display: []
   new:
     params:
-      title: New object for IndexBundle
-      display: [title, parent]
+      title: New category
+      display: [title, parent, text]
       actions:
         list: ~
   edit:
     params:
-      title: You're editing the object "{{ Category.title }}"
-      display: [title, parent]
+      title: You're editing the category "{{ Category.title }}"
+      display: [title, parent, text]
       actions:
         list: ~
   delete: ~

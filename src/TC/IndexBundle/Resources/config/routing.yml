@@ -8,9 +8,14 @@ admin_category:
     prefix:   /index/admin/category
 
 category_mover_up:
-    pattern:   /index/admin/category/{id}/move-up
+    pattern:   /index/admin/category/{pk}/move-up
     defaults:  { _controller: TCIndexBundle:CategoryMover:up }
 
 category_mover_down:
-    pattern:   /index/admin/category/{id}/move-down
+    pattern:   /index/admin/category/{pk}/move-down
     defaults:  { _controller: TCIndexBundle:CategoryMover:down }
+
+admin_item:
+    resource: "@TCIndexBundle/Controller/Item/"
+    type:     admingenerator
+    prefix:   /index/admin/item

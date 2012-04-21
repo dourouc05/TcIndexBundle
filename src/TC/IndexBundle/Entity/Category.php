@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category
 {
+    // Below: useful fields. 
+    
     /**
      * @var integer $id
      *
@@ -23,9 +25,22 @@ class Category
     /**
      * @var string $title
      *
+     * The category's title. 
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $title;
+
+    /**
+     * @var text $text
+     * 
+     * The category's text (may be HTML). 
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $text;
+    
+    // Below: tree management fields. 
 
     /**
      * @var integer $depth
@@ -42,6 +57,7 @@ class Category
      * @ORM\Column(type="integer")
      */
     private $position;
+    
     // NO ORM! Simple variable indicating what to do when persisting about position (push one level higher or lower). 
     // The reason to do it when persisting is you have the EM. It is not possible to be pushed more than one level. 
     //   -: go below. 
@@ -57,13 +73,23 @@ class Category
 	
 	/**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children", fetch="EAGER")
-     */
+     * 
+     *///@ORM\OrderBy({"position" = "ASC"})
     private $parent;
 	
 	/** 
 	 * @ORM\OneToMany(targetEntity="Item", mappedBy="category")
 	 */ 
 	private $items; 
+
+    /**
+     * @var integer $order
+     *
+     * Self-generated value for sorts
+     *
+     * @ORM\Column(type="integer", name="disorder")
+     */
+    private $order;
 
 
     public function __construct() {
@@ -142,6 +168,12 @@ class Category
             $em->persist($this); 
             $em->flush(); 
         }
+        
+        // Update order. 
+        $this->getOrder(); 
+            $em->persist($this); 
+            $em->flush(); 
+        var_dump(4);
     }
 	
 
@@ -183,6 +215,26 @@ class Category
         } else {
             return $this->title;
         }
+    }
+
+    /**
+     * Set text
+     *
+     * @param integer $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
     }
 
     /**
@@ -263,6 +315,11 @@ class Category
         return $this->depth;
     }
     
+    // Returns 20 ^ (6 - depth) - max depth: 6, as depth increases when going down the tree.
+    public function getDepthExponent() {
+        return pow(20, 6 - $this->depth);
+    }
+    
     /**
      * Set parent
      *
@@ -271,5 +328,29 @@ class Category
     private function setDepth($depth)
     {
         $this->depth = $depth;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        if(isset($this->parent)) {
+            return $this->order = $this->parent->getOrder() + $this->getDepthExponent() * ($this->position + 1); 
+        } else {
+            return $this->order = $this->getDepthExponent() * ($this->position + 1); 
+        }
+    }
+    
+    /**
+     * Set parent
+     *
+     * @param integer $order
+     */
+    private function setOrder($order)
+    {
+        $this->order = $order;
     }
 }

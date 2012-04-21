@@ -13,7 +13,7 @@ class ListController extends BaseListController
                     ->createQueryBuilder()
                     ->select('c')
                     ->from('TC\IndexBundle\Entity\Category', 'c')
-                    ->orderBy('c.position', 'ASC');
+                    ->orderBy('c.order', 'ASC');
 
         $this->processSort($query);
         $this->processFilters($query);

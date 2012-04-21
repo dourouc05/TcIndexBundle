@@ -8,8 +8,8 @@ params:
 builders:
   list:
     params:
-      title: List for IndexBundle
-      display: [title, url, synopsis, category]
+      title: Items list
+      display: [title, url, category]
       actions:
         new: ~
       object_actions:
@@ -17,16 +17,16 @@ builders:
         delete: ~
   filters:
     params:
-      display: ~
+      display: [title, url, category]
   new:
     params:
-      title: New object for IndexBundle
+      title: New item
       display: [title, url, synopsis, category]
       actions:
         list: ~
   edit:
     params:
-      title: You're editing the object "{{ Item.title }}"
+      title: You're editing the item "{{ Item.title }}"
       display: [title, url, synopsis, category]
       actions:
         list: ~

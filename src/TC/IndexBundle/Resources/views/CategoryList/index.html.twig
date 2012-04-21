@@ -1,16 +1,12 @@
 {% extends_admingenerated "TCIndexBundle:CategoryList:index.html.twig" %}
 
-{# block list_td_column_title %}{{ Category.getTitle(true) }}{% endblock #}
+{% block list_td_column_title %}{{ Category.getTitle(true) }}{% endblock %}
 
-{% block list_tbody %}
-{# Et on s'amuse ! Il faut réécrire ici toute la logique pour qu'on affiche correctement les catégories : d'abord les catégories de premier niveau, puis les catégories de niveau inférieur, etc., de manière récursive. #}
-<tbody>
-    {% if Categorys|length > 0 %}
-        {% include "TCIndexBundle:CategoryList:line.html.twig" with {'Categories': Categorys, 'depth': 0} %}
-    {% else %}
-    <tr class="list_trow no_results_row">
-        <td colspan="5">{% trans from "Admingenerator" %}list.no_results{% endtrans %}</td>
-    </tr>
-    {% endif %}
-</tbody>
+{% block list_object_actions %}
+<td class="actions">
+    <a class="edit" href="{{ path("TC_IndexBundle_Category_edit", { 'pk': Category.id }) }}" > </a>
+    <a class="delete" href="{{ path("TC_IndexBundle_Category_delete", { 'pk': Category.id }) }}" onclick='return confirm("This will delete child categories if any.")'> </a>
+    <a style="text-decoration: none; color: black;" class="up" href="{{ path("category_mover_up", { 'pk': Category.id }) }}" >&uarr;</a>
+    <a style="text-decoration: none; color: black;" class="down" href="{{ path("category_mover_down", { 'pk': Category.id }) }}" >&darr;</a>
+</td>
 {% endblock %}

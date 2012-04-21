@@ -10,15 +10,17 @@ class CategoryMoverController extends Controller
     private $em; 
     private $q; 
 
-    public function upAction($id)
+    public function upAction($pk)
     {
+        $id = $pk; 
         $this->getResult($id); 
         $this->q->pushAbove(); 
         return $this->end(); 
     }
     
-    public function downAction($id)
+    public function downAction($pk)
     {
+        $id = $pk; 
         $this->getResult($id); 
         $this->q->pushBelow(); 
         return $this->end(); 
