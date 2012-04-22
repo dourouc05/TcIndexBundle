@@ -65,22 +65,22 @@ class Category
     //   +: go above. 
     private $positionPush = 0; 
 	
-	/** 
-	 * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+    /** 
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      * @ORM\OrderBy({"position" = "ASC"})
-	 */ 
-	private $children; 
+     */ 
+    private $children; 
 	
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children", fetch="EAGER")
      * 
      *///@ORM\OrderBy({"position" = "ASC"})
     private $parent;
 	
-	/** 
-	 * @ORM\OneToMany(targetEntity="Item", mappedBy="category")
-	 */ 
-	private $items; 
+    /** 
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="category")
+     */ 
+    private $items; 
 
     /**
      * @var integer $order
@@ -95,13 +95,13 @@ class Category
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->items    = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->position = -1; 
-		$this->depth    = 0; 
+        $this->position = -1; 
+        $this->depth    = 0; 
     }
 	
-	public function __toString() {
-		return (string) $this->getTitle(true); 
-	}
+    public function __toString() {
+        return (string) $this->getTitle(true); 
+    }
     
     // Explicitely called by the listener. 
     public function prePersist($em) {
@@ -115,7 +115,6 @@ class Category
         // Handle position subtleties: if position is not set yet (-1), let's check what's in the table and take 
         // the next one. If it is set, don't touch unless the user wants to (handled by other methods)! 
         if($this->position < 0) {
-            
             // WHERE ... = NULL is not valid DQL. 
             if($this->parent == NULL) {
                 $q = $em->createQuery('SELECT COUNT(c) FROM TCIndexBundle:Category c WHERE c.parent IS NULL AND c.position > -1'); 
@@ -165,15 +164,10 @@ class Category
             
             $this->positionPush = 0; 
             $em->persist($q); 
-            $em->persist($this); 
-            $em->flush(); 
         }
         
         // Update order. 
         $this->getOrder(); 
-            $em->persist($this); 
-            $em->flush(); 
-        var_dump(4);
     }
 	
 

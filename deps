@@ -72,6 +72,7 @@
 [AdmingeneratorGeneratorBundle]
     git=http://github.com/cedriclombardot/AdmingeneratorGeneratorBundle.git
     target=/bundles/Admingenerator/GeneratorBundle
+    version=2.0
 
 [SensioGeneratorBundle]
     git=http://github.com/sensio/SensioGeneratorBundle.git
@@ -117,6 +118,7 @@
 [FOSUserBundle]
     git=http://github.com/FriendsOfSymfony/FOSUserBundle.git
     target=bundles/FOS/UserBundle
+    version=1.1.0
 
 [AGUserBundle]
     git=http://github.com/cedriclombardot/AdmingeneratorUserBundle

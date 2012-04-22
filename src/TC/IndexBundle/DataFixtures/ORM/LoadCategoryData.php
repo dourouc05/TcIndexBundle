@@ -6,10 +6,20 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager; 
 use TC\IndexBundle\Entity\Category;
 use TC\IndexBundle\Entity\Item;
+//use TC\IndexBundle\Importer\HtmlFileImporter;
 
 class LoadCategoryData implements FixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load2(ObjectManager $manager)
+    {
+        $c3 = new Category();
+        $c3->setTitle('C');
+        $manager->persist($c3);
+        $importer = new HtmlFileImporter($manager); 
+        //$importer->import('C:\\Program Files (x86)\\EasyPHP-5.3.8.0\\www\\index\\index\\articles\\c.php'); 
+    }
+    
+    public function load(ObjectManager $manager)//_TestSet
     {
         $b = new Category();
         $b->setTitle('21');
