@@ -45,7 +45,7 @@ class Category
      * 
      * The category's path. 
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, unique=true)
      */
     private $path; 
     
