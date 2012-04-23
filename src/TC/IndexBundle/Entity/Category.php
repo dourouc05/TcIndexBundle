@@ -39,6 +39,15 @@ class Category
      * @ORM\Column(type="text", nullable=true)
      */
     private $text;
+
+    /**
+     * @var text $path
+     * 
+     * The category's path. 
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $path; 
     
     // Below: tree management fields. 
 
@@ -214,7 +223,7 @@ class Category
     /**
      * Set text
      *
-     * @param integer $text
+     * @param string $text
      */
     public function setText($text)
     {
@@ -229,6 +238,26 @@ class Category
     public function getText()
     {
         return $this->text;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
     }
 
     /**
