@@ -6,6 +6,7 @@ use TC\IndexBundle\Entity\Category;
 use Symfony\Component\Finder\Finder;
 use Doctrine\Common\Persistence\ObjectManager; 
 use Doctrine\ORM\NoResultException; 
+use Doctrine\ORM\ORMException; 
 
 /**
  * Imports folders as categories. 
@@ -77,45 +78,49 @@ class XmlCategoryImporter extends AbstractImporter {
         // Now create the categories. 
         foreach($cats as $c) {
             var_dump($c);
-            //$parent = null; 
             $accumulator = '/'; 
             for($i = 0; $i < count($c); ++$i) {
-                /*if(isset($create[$c[$i]])) {
-                    $parent = $create[$c[$i]]; 
-                }
+                $nAcc = $accumulator . $c[$i] . '/'; // the path of the category to create. 
                 
-                $create[$c[$i]] = new Category(); 
-                $create[$c[$i]]->setTitle($c[$i]);
-                $create[$c[$i]]->setPath($c[$i]);
-                if($parent) {
-                    $create[$c[$i]]->setParent($parent);
-                }*/
-                
-                $cat = new Category(); 
-                $cat->setTitle($accumulator . $c[$i] . '/'); 
-                $cat->setPath($cat->getTitle()); 
-                
+                // Does current category exists? 
                 try {
-                    var_dump($accumulator); 
-                    $parent = $this
-                            ->om
-                            ->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.path = :p')
-                            ->setParameter('p', $accumulator)
-                            ->getSingleResult(); 
-                    $cat->setParent($parent);
+                    var_dump($accumulator . $c[$i] . '/');
+                    $this->om
+                         ->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.path = :p')
+                         ->setParameter('p', $nAcc)
+                         ->getSingleResult();
                 } catch(NoResultException $e) {
-                    // Nothing else to do. 
+                    // This is the normal path of execution. 
+                
+                    $cat = new Category(); 
+                    $cat->setTitle($accumulator . $c[$i] . '/'); 
+                    $cat->setPath($cat->getTitle()); 
+
+                    try {
+                        var_dump($accumulator); 
+                        $parent = $this
+                                ->om
+                                ->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.path = :p')
+                                ->setParameter('p', $accumulator)
+                                ->getSingleResult(); 
+                        $cat->setParent($parent);
+                    } catch(NoResultException $e) {
+                        // Nothing else to do. 
+                    } 
+
+                    try {
+                        $this->om->persist($cat); 
+                        $this->om->flush(); 
+                    } catch(\PDOException $e) {
+                        // Already in database. 
+                        $this->om->detach($cat);
+                        continue; 
+                    } catch(ORMException $e) {
+                        var_dump($e); 
+                        continue; 
+                    }
                 } 
-                var_dump($cat); 
-                $accumulator .= $c[$i] . '/';
-                $this->om->persist($cat); 
-                try {
-                    $this->om->flush(); 
-                } catch(\PDOException $e) {
-                    // Already in database. 
-                    $this->om->detach($cat);
-                    continue; 
-                }
+                $accumulator = $nAcc; 
             }
         }
     }
