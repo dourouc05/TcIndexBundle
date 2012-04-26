@@ -43,7 +43,8 @@ class Category
     /**
      * @var text $path
      * 
-     * The category's path. 
+     * The category's path. For example: tutoriels/qt/. Must be relative to the domain's root and
+     * end with a slash. 
      *
      * @ORM\Column(type="text", nullable=true, unique=true)
      */

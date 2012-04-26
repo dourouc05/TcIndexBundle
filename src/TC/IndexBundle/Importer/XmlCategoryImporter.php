@@ -78,7 +78,7 @@ class XmlCategoryImporter extends AbstractImporter {
         // Now create the categories. 
         foreach($cats as $c) {
             var_dump($c);
-            $accumulator = '/'; 
+            $accumulator = $folder . '/'; 
             for($i = 0; $i < count($c); ++$i) {
                 $nAcc = $accumulator . $c[$i] . '/'; // the path of the category to create. 
                 

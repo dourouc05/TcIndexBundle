@@ -36,4 +36,13 @@ class ImporterController extends Controller {
         $importer->import('tutoriels'); 
         return new Response(); 
     }
+    
+    /**
+     * @Route("/xml/articles") 
+     */
+    public function xmlArticlesImportAction() {
+        $importer = new XmlArticleImporter($this->getDoctrine()->getEntityManager(), 'C:\\Program Files (x86)\\EasyPHP-5.3.8.0\\www\\index'); 
+        $importer->importFolder('tutoriels'); 
+        return new Response(); 
+    }
 }
