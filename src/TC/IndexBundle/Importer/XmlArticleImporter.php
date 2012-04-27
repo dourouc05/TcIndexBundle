@@ -78,5 +78,8 @@ class XmlArticleImporter extends AbstractImporter {
         $item->setSynopsis($xml->synopsis->paragraph[0]); 
         $item->setTitle($xml->entete->titre->article); 
         $item->setUrl($xml->entete->urlhttp); 
+        
+        $this->om->persist($item);
+        $this->om->flush(); 
     }
 }
