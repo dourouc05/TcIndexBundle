@@ -1,27 +1,27 @@
 {{ 65|gab_up }}
 <div id="xo_global">
-	<div id="xo_alignement">
+    <div id="xo_alignement">
         <div id="xo_menu">
-			<ul id="menuitems">
-				<li><a href="#author"><b>&nbsp;Auteur&nbsp;</b></a></li>
-				<li><a href="?page=articles#articles"><b>&nbsp;Articles&nbsp;</b></a></li>
-				<li><a href="?page=cpp#cpp">&nbsp;C++&nbsp;</a></li>
-				<li><a href="?page=qt#qt">&nbsp;Qt&nbsp;</a></li>
-				<li><a href="?page=gpgpu#gpgpu">&nbsp;GPGPU&nbsp;</a></li>
-				<li><a href="?page=ps#ps">&nbsp;Photoshop&nbsp;</a></li>
-				<li><a href="?page=maths#maths">&nbsp;Mathématiques&nbsp;</a></li>
-				<li><a href="?page=php#php">&nbsp;PHP&nbsp;</a></li>
-				<li><a href="#contact"><b>&nbsp;Contact&nbsp;</b></a></li>
-			</ul>
-		</div>
-		<div class="xo_contenu">
+            <ul id="menuitems">
+                <li><a href="#author"><b>&nbsp;Auteur&nbsp;</b></a></li>
+                <li><a href="?page=articles#articles"><b>&nbsp;Articles&nbsp;</b></a></li>
+                <li><a href="?page=cpp#cpp">&nbsp;C++&nbsp;</a></li>
+                <li><a href="?page=qt#qt">&nbsp;Qt&nbsp;</a></li>
+                <li><a href="?page=gpgpu#gpgpu">&nbsp;GPGPU&nbsp;</a></li>
+                <li><a href="?page=ps#ps">&nbsp;Photoshop&nbsp;</a></li>
+                <li><a href="?page=maths#maths">&nbsp;Mathématiques&nbsp;</a></li>
+                <li><a href="?page=php#php">&nbsp;PHP&nbsp;</a></li>
+                <li><a href="#contact"><b>&nbsp;Contact&nbsp;</b></a></li>
+            </ul>
+        </div>
+        <div class="xo_contenu">
             {% for category in categories %}
                 {% include "TCIndexBundle:ThemeDefault:category.html.twig" with {'category': category} %}
             {% endfor %}
-		</div>
+        </div>
         <div style="float: right">
             
         </div>
-	</div>
+    </div>
 </div>
 {{ 65|gab_down }}

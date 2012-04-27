@@ -1,0 +1,26 @@
+{{ 1|gab_up }}
+<h1>Configuration de l'index</h1>
+<form action="{{ path("tc_index_configuration_index") }}" method="POST">
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Valeur</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="2"><input type="submit"/></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for option in options %}
+                <tr>
+                    <td>{{ option.title }}</td>
+                    <td><input name="{{ option.field }}" value="{{ option.value }}" type="text"/></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+{{ 1|gab_down }}

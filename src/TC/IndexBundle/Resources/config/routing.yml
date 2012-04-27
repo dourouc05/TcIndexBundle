@@ -20,7 +20,17 @@ category_mover_down:
     pattern:   /index/admin/category/{pk}/move-down
     defaults:  { _controller: TCIndexBundle:CategoryMover:down }
 
+index:
+    resource: "@TCIndexBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /
+
 importer:
     resource: "@TCIndexBundle/Controller/ImporterController.php"
     type:     annotation
-    prefix:   /index
+    prefix:   /index/admin/import
+
+config:
+    resource: "@TCIndexBundle/Controller/ConfigurationController.php"
+    type:     annotation
+    prefix:   /index/admin/configuration

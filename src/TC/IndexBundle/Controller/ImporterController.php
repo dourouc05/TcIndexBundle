@@ -3,6 +3,7 @@
 namespace TC\IndexBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request; 
 use Symfony\Component\HttpFoundation\Response;
 use TC\IndexBundle\Entity\Category;
 use TC\IndexBundle\Entity\Item;
@@ -15,26 +16,35 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  * Description of ImporterController
  *
  * @author Thibaut
- * 
- * @Route("/import") 
  */
 class ImporterController extends Controller {
     /**
+     * @Route("/") 
+     */
+    public function indexAction() {
+        return $this->render('TCIndexBundle:Default:importers.html.twig');
+    }
+    
+    /**
      * @Route("/html") 
      */
-    public function htmlFileImportAction() {
-        $importer = new HtmlFileImporter($this->getDoctrine()->getEntityManager()); 
-        $importer->import('C:\\Program Files (x86)\\EasyPHP-5.3.8.0\\www\\index\\index\\articles\\qt.php'); 
-        return new Response(); 
+    public function htmlFileImportAction(Request $request) {
+        if ($request->getMethod() == 'GET') {
+            $importer = new HtmlFileImporter($this->getDoctrine()->getEntityManager()); 
+            $importer->import($_SERVER['DOCUMENT_ROOT'] . '/' . $_GET['page']); 
+            return $this->render('TCIndexBundle:Default:htmlFileImporter.html.twig', array('page' => $_GET['page']));
+        }
+        
+        throw new \Exception('Would you have tried to get here by your own means?');
     }
     
     /**
      * @Route("/xml/categories") 
      */
     public function xmlCategoriesImportAction() {
-        $importer = new XmlCategoryImporter($this->getDoctrine()->getEntityManager(), 'C:\\Program Files (x86)\\EasyPHP-5.3.8.0\\www\\index'); 
+        $importer = new XmlCategoryImporter($this->getDoctrine()->getEntityManager(), $_SERVER['DOCUMENT_ROOT']); 
         $importer->import('tutoriels'); 
-        return new Response(); 
+        return $this->render('TCIndexBundle:Default:xmlCategoryImporter.html.twig');
     }
     
     /**
@@ -43,6 +53,6 @@ class ImporterController extends Controller {
     public function xmlArticlesImportAction() {
         $importer = new XmlArticleImporter($this->getDoctrine()->getEntityManager(), 'C:\\Program Files (x86)\\EasyPHP-5.3.8.0\\www\\index'); 
         $importer->importFolder('tutoriels'); 
-        return new Response(); 
+        return $this->render('TCIndexBundle:Default:xmlArticleImporter.html.twig');
     }
 }

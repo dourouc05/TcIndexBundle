@@ -18,11 +18,12 @@ class HtmlFileImporter extends AbstractImporter
     **/
     public function import($file)
     {
-        var_dump(42); 
+        if(! file_exists($file)) {
+            throw new \Exception('File ' . $file . ' does not exist. ');
+        }
         $data = utf8_encode(file_get_contents($file));
         
         $data = explode('</h', $data, 2); 
-        //var_dump($data);
         $title = array_shift($data); 
         $data = $data[0];
         
@@ -122,7 +123,5 @@ class HtmlFileImporter extends AbstractImporter
         $el->setUrl($url);
         $el->setTitle($title);
         $this->om->persist($el); 
-        
-        var_dump(array($url, $title));
     }
 } 

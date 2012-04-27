@@ -1,0 +1,26 @@
+{{ 1|gab_up }}
+<h1>Administration de l'index</h1>
+<ul>
+    <li>
+        <a href="{{ path("tc_index_importer_index") }}">Importer des fichiers</a>. 
+    </li>
+    <li>
+        <a href="{{ path("TC_IndexBundle_Category_list") }}">Gérer les catégories</a>. 
+    </li>
+    <li>
+        <a href="{{ path("TC_IndexBundle_Item_list") }}">Gérer les items</a>. 
+    </li>
+    <li>
+        <a href="{{ path("tc_index_configuration_index") }}">Configurer l'index</a>. 
+    </li>
+    <li>
+        <a href="{{ path("tc_index_configuration_emptycaches") }}">Vider les caches</a>. 
+    </li>
+    <li>
+        <a href="{{ path("tc_index_default_index") }}">Visualiser l'index</a>. 
+    </li>
+    <li>
+        <a href="{{ path("tc_index_default_indexnocache") }}">Visualiser l'index sans cache</a>. 
+    </li>
+</ul>
+{{ 1|gab_down }}

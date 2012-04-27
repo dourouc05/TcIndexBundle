@@ -60,7 +60,6 @@ class XmlCategoryImporter extends AbstractImporter {
             }
         }
         $cats[] = explode('/', $categories[count($categories) - 1]); // the last one is not getting in the list. 
-        var_dump($cats);
         // The result: 
             // array
             //  0 => 
@@ -77,14 +76,12 @@ class XmlCategoryImporter extends AbstractImporter {
         
         // Now create the categories. 
         foreach($cats as $c) {
-            var_dump($c);
             $accumulator = $folder . '/'; 
             for($i = 0; $i < count($c); ++$i) {
                 $nAcc = $accumulator . $c[$i] . '/'; // the path of the category to create. 
                 
                 // Does current category exists? 
                 try {
-                    var_dump($accumulator . $c[$i] . '/');
                     $this->om
                          ->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.path = :p')
                          ->setParameter('p', $nAcc)
@@ -97,7 +94,6 @@ class XmlCategoryImporter extends AbstractImporter {
                     $cat->setPath($cat->getTitle()); 
 
                     try {
-                        var_dump($accumulator); 
                         $parent = $this
                                 ->om
                                 ->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.path = :p')
@@ -116,7 +112,6 @@ class XmlCategoryImporter extends AbstractImporter {
                         $this->om->detach($cat);
                         continue; 
                     } catch(ORMException $e) {
-                        var_dump($e); 
                         continue; 
                     }
                 } 

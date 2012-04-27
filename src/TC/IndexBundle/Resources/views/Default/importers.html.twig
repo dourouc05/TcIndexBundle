@@ -1,0 +1,19 @@
+{{ 1|gab_up }}
+<h1>Importation d'index</h1>
+<p>
+    Quelle importation souhaitez-vous lancer ? 
+</p>
+<ul>
+    <li>
+        <form action="{{ path("tc_index_importer_htmlfileimport") }}" method="get">
+            Importer un fichier HTML (chemin relativement à la racine du domaine) : <input type="text" name="page"/>. <input type="submit" value="Importer" />
+        </form>
+    </li>
+    <li>
+        <a href="{{ path("tc_index_importer_xmlcategoriesimport") }}">Importer les catégories à partir de l'arborescence, la racine étant <code>tutoriels</code>. </a>
+    </li>
+    <li>
+        <a href="{{ path("tc_index_importer_xmlarticlesimport") }}">Importer les articles à partir de l'arborescence, la racine étant <code>tutoriels</code>. </a>
+    </li>
+</ul>
+{{ 1|gab_down }}
