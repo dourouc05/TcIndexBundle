@@ -17,15 +17,14 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-			new JMS\AopBundle\JMSAopBundle(),
-			new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
-			new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new JMS\AopBundle\JMSAopBundle(),
+            new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-			new FOS\UserBundle\FOSUserBundle(),
-			new Admingenerator\UserBundle\AdmingeneratorUserBundle(), 
+            new FOS\UserBundle\FOSUserBundle(),
+            new Admingenerator\UserBundle\AdmingeneratorUserBundle(), 
             new TC\IndexBundle\TCIndexBundle(),
-            new Dvp\GabaritBundle\DvpGabaritBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

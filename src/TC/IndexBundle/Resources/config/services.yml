@@ -10,3 +10,8 @@ services:
         class: TC\IndexBundle\Listeners\DoctrineListener
         tags:
             - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+            
+    twig.extension.gabarit4:
+        class: TC\IndexBundle\Twig\GabaritExtension
+        tags:
+            - { name: twig.extension }
