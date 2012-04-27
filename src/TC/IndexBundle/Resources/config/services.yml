@@ -11,7 +11,8 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist, method: prePersist }
             
-    twig.extension.gabarit4:
+    twig.extension.gabarit:
         class: TC\IndexBundle\Twig\GabaritExtension
+        arguments: [@doctrine]
         tags:
             - { name: twig.extension }
