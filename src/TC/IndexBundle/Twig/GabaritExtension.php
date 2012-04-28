@@ -55,6 +55,10 @@ class GabaritExtension extends \Twig_Extension
         $rubrique = $this->options['rubrique_id']; 
         $gabarit_utf8 = false; 
         $titre_page = $this->options['titre']; 
+        // Administration pages are accessed by /... URLs, don't show the same title. 
+        if(isset($_SERVER['PATH_INFO'])) {
+            $titre_page = '[Administration] ' . $titre_page; 
+        } 
         $meta_description = $this->options['description']; 
         $meta_keywords = $this->options['mots-cles']; 
         $urlCss = './css.css';
