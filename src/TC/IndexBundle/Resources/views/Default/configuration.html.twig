@@ -1,5 +1,8 @@
-{{ gab_up() }}
-<h1>Configuration de l'index</h1>
+{% extends "TCIndexBundle:Default:_main.html.twig" %}
+
+{% block title %}Configuration de l'index{% endblock %}
+
+{% block content %}
 <form action="{{ path("tc_index_configuration_index") }}" method="POST">
     <table>
         <thead>
@@ -23,4 +26,4 @@
         </tbody>
     </table>
 </form>
-{{ gab_down() }}
+{% endblock %}

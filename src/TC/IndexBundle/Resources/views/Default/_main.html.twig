@@ -1,0 +1,7 @@
+{{ gab_up() }}
+<h1>{% block title %}Administration de l'index{% endblock %}</h1>
+<p>
+    <a href="{{ path('tc_index_default_admin') }}">Retour au tableau de bord</a>.
+</p>
+    {% block content %}{% endblock %}
+{{ gab_down() }}

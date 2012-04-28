@@ -1,4 +1,8 @@
-{{ gab_up() }}
+{% extends "TCIndexBundle:Default:_main.html.twig" %}
+
+{% block title %}Importation d'index HTML{% endblock %}
+
+{% block content %}
 <p>
     Un fichier d'index (<code>{{ page }}</code>) a été correctement importé. 
 </p>
@@ -7,4 +11,4 @@
     simultanée de la fonction d'importation de XML par recherche sur le domaine, il faudra 
     configurer les chemins pour éviter de recréer des catégories supplémentaires. 
 </p>
-{{ gab_down() }}
+{% endblock %}

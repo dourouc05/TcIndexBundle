@@ -1,5 +1,8 @@
-{{ gab_up() }}
-<h1>Importation d'index</h1>
+{% extends "TCIndexBundle:Default:_main.html.twig" %}
+
+{% block title %}Importation d'index{% endblock %}
+
+{% block content %}
 <p>
     Quelle importation souhaitez-vous lancer ? 
 </p>
@@ -16,4 +19,4 @@
         <a href="{{ path("tc_index_importer_xmlarticlesimport") }}">Importer les articles à partir de l'arborescence, la racine étant <code>tutoriels</code>. </a>
     </li>
 </ul>
-{{ gab_down() }}
+{% endblock %}

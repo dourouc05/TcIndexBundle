@@ -1,8 +1,12 @@
-{{ gab_up() }}
+{% extends "TCIndexBundle:Default:_main.html.twig" %}
+
+{% block title %}Importation d'arborescence{% endblock %}
+
+{% block content %}
 <p>
     Des catégories ont correctement été importées à partir de l'arborescence du domaine. 
 </p>
 <p>
     Pour le moment, les noms correspondent aux chemins trouvés, ne pas oublier de les adapter. 
 </p> 
-{{ gab_down() }}
+{% endblock %}

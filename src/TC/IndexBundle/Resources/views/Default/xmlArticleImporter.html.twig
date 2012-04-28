@@ -1,8 +1,12 @@
-{{ gab_up() }}
+{% extends "TCIndexBundle:Default:_main.html.twig" %}
+
+{% block title %}Importation d'articles XML{% endblock %}
+
+{% block content %}
 <p>
     Des articles ont correctement été importés grâce aux XML du kit. 
 </p>
 <p>
     Les catégories ont été assignées par les répertoires, ne pas hésiter à revérifier ces associations automatiques. 
 </p> 
-{{ gab_down() }}
+{% endblock %}

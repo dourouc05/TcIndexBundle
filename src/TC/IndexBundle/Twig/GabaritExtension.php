@@ -14,8 +14,7 @@ use Symfony\Bundle\DoctrineBundle\Registry;
  *
  * @author Thibaut
  */
-class GabaritExtension extends \Twig_Extension
-{
+class GabaritExtension extends \Twig_Extension {
     private $options; 
     
     function __construct(Registry $doctrine) {
@@ -33,24 +32,23 @@ class GabaritExtension extends \Twig_Extension
      *
      * @return string The extension name
      */
-    public function getName()
-    {
+    public function getName() {
         return 'gabarit';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
-    {
+    public function getFunctions() {
         return array(
-            'gab_up'      => new \Twig_Function_Method($this, 'gabUp',   array('is_safe' => array('html'))),
-            'gab_down'    => new \Twig_Function_Method($this, 'gabDown', array('is_safe' => array('html')))
+            'gab_up'        => new \Twig_Function_Method($this, 'gabUp',       array('is_safe' => array('html'))),
+            'gab_down'      => new \Twig_Function_Method($this, 'gabDown',     array('is_safe' => array('html'))), 
+            'gab_up_body'   => new \Twig_Function_Method($this, 'gabUpBody',   array('is_safe' => array('html'))), 
+            'gab_down_body' => new \Twig_Function_Method($this, 'gabDownBody', array('is_safe' => array('html'))), 
         );
     }
     
-    public function gabUp()
-    {
+    public function gabUp() {
         ob_start();
         $rubrique = $this->options['rubrique_id']; 
         $gabarit_utf8 = false; 
@@ -66,8 +64,7 @@ class GabaritExtension extends \Twig_Extension
         return utf8_encode(ob_get_clean()); 
     }
     
-    public function gabDown()
-    {
+    public function gabDown() {
         ob_start();
         $rubrique = $this->options['rubrique_id']; 
         $fichierCachePied = $_SERVER['DOCUMENT_ROOT'] . '/template/caches/piedxhtml' . $rubrique . '.cache'; 
@@ -77,5 +74,13 @@ class GabaritExtension extends \Twig_Extension
         $Annee = date('Y'); 
         include $_SERVER['DOCUMENT_ROOT'] . '/template/pied.php'; 
         return ob_get_clean(); 
+    }
+    
+    public function gabUpBody() {
+        return utf8_encode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/template/caches/tetexhtml' . $this->options['rubrique_id'] . '.cache'));
+    }
+    
+    public function gabDownBody() {
+        return utf8_encode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/template/caches/piedxhtml' . $this->options['rubrique_id'] . '.cache'));
     }
 }
