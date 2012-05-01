@@ -4,6 +4,7 @@ namespace TC\IndexBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 /**
  * Description of DefaultController
@@ -14,6 +15,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/") 
+     * @Cache(smaxage="3600", maxage="3600")
      */
     public function indexAction() {
         $cats = $this->getDoctrine()

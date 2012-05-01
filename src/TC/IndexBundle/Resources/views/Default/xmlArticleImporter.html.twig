@@ -3,10 +3,16 @@
 {% block title %}Importation d'articles XML{% endblock %}
 
 {% block body %}
-<p>
-    Des articles ont correctement été importés grâce aux XML du kit. 
-</p>
-<p>
-    Les catégories ont été assignées par les répertoires, ne pas hésiter à revérifier ces associations automatiques. 
-</p> 
+<h1>Importation d'arborescence</h1>
+<div style="font-size: 13px; line-height: 2.0;">
+    <p>
+        Des articles ont correctement été importés grâce aux XML du kit. 
+    </p>
+    <p>
+        Les catégories ont été assignées par les répertoires, ne pas hésiter à revérifier ces associations automatiques. 
+    </p> 
+    <p>
+        <a href="{{ path("TC_IndexBundle_Item_list") }}">Éditer les articles</a>. 
+    </p> 
+</div>
 {% endblock %}

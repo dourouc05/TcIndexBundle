@@ -70,6 +70,28 @@ class ConfigurationController extends Controller {
      * @Route("/empty-caches") 
      */
     public function emptyCachesAction() {
-        return new Response(); 
+        $this->emptyDir($this->get('kernel')->getCacheDir());
+        return $this->render('TCIndexBundle:Default:cacheEmptied.html.twig'); 
+    }
+    
+    private function emptyDir($dir, $deleteSelf = false) {
+        if(!$dh = @opendir($dir)) {
+            return;
+        }
+        
+        while (false !== ($obj = readdir($dh))) {
+            if($obj=='.' || $obj=='..') {
+                continue;
+            }
+            if (!@unlink($dir.'/'.$obj)) {
+                $this->emptyDir($dir.'/'.$obj, true);
+            }
+        }
+
+        closedir($dh);
+        
+        if ($deleteSelf){
+            @rmdir($dir);
+        }
     }
 }

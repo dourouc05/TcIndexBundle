@@ -3,20 +3,20 @@
 {% block title %}Importation d'index{% endblock %}
 
 {% block body %}
-<p>
+<p style="font-size: 13px; line-height: 2.0;">
     Quelle importation souhaitez-vous lancer ? 
 </p>
-<ul>
+<ul style="font-size: 13px; line-height: 2.0; list-style-type: square; margin-left:50px;">
     <li>
         <form action="{{ path("tc_index_importer_htmlfileimport") }}" method="get">
             Importer un fichier HTML (chemin relativement à la racine du domaine) : <input type="text" name="page"/>. <input type="submit" value="Importer" />
         </form>
     </li>
     <li>
-        <a href="{{ path("tc_index_importer_xmlcategoriesimport") }}">Importer les catégories à partir de l'arborescence, la racine étant <code>tutoriels</code> relativement à la racine du domaine. </a>
+        <a href="{{ path("tc_index_importer_xmlcategoriesimport") }}">Importer les catégories à partir de l'arborescence, la racine étant <code>tutoriels</code> relativement à la racine du domaine</a>. 
     </li>
     <li>
-        <a href="{{ path("tc_index_importer_xmlarticlesimport") }}">Importer les articles à partir de l'arborescence, la racine étant <code>tutoriels</code> relativement à la racine du domaine. </a>
+        <a href="{{ path("tc_index_importer_xmlarticlesimport") }}">Importer les articles à partir de l'arborescence, la racine étant <code>tutoriels</code> relativement à la racine du domaine</a>. Il est nécessaire d'avoir importé les catégories auparavant. Les articles mis à jour verront leurs enregistrements possiblement modifiés. 
     </li>
 </ul>
 {% endblock %}

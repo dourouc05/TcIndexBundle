@@ -68,16 +68,6 @@ class XmlArticleImporter extends AbstractImporter {
         $path = implode('/', $path);
         $path .= '/'; // To follow the convention for paths. 
 
-        try {
-            $this->om
-                    ->createQuery('SELECT i FROM TCIndexBundle:Item i WHERE i.path = :p')
-                    ->setParameter('p', $path)
-                    ->getSingleResult();
-        }
-        catch (\Exception $e) {
-            return;
-        }
-
         $parent = $this->om
                 ->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.path = :p')
                 ->setParameter('p', $path)
@@ -86,7 +76,15 @@ class XmlArticleImporter extends AbstractImporter {
         $path = explode('developpez.com/', $xml->entete->urlhttp, 2);
         $path = $path[1];
 
-        $item = new Item();
+        try {
+            $item = $this->om
+                         ->createQuery('SELECT i FROM TCIndexBundle:Item i WHERE i.path = :p')
+                         ->setParameter('p', $path)
+                         ->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $item = new Item();
+        }
+
         $item->setCategory($parent);
         $item->setSynopsis($xml->synopsis->paragraph[0]);
         $item->setTitle($xml->entete->titre->article);

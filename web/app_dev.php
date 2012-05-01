@@ -22,5 +22,5 @@ use Symfony\Component\HttpFoundation\Request;
 
 $kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
-//$kernel = new AppCache($kernel);
+$kernel = new AppCache($kernel);
 $kernel->handle(Request::createFromGlobals())->send();
