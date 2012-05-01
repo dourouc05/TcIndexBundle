@@ -1,0 +1,17 @@
+{% extends "TCIndexBundle:Default:_main.html.twig" %}
+
+{% block title %}Importation d'index HTML{% endblock %}
+
+{% block body %}
+<h1>Importation d'index HTML</h1>
+<div style="font-size: 13px; line-height: 2.0;">
+    <p>
+        Un fichier d'index (<code>{{ page }}</code>) a été correctement importé. 
+    </p>
+    <p>
+        Les catégories ont été créées en fonction des titres du fichier ; en cas d'utilisation 
+        simultanée de la fonction d'importation de XML par recherche sur le domaine, il faudra 
+        configurer les chemins pour éviter de recréer des catégories supplémentaires. 
+    </p>
+</div>
+{% endblock %}
