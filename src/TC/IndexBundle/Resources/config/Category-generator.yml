@@ -5,38 +5,42 @@ params:
   bundle_name: IndexBundle
   fields: 
     text:
-      label: Shown text (may be HTML)
+      label: Texte affiché (HTML autorisé)
+    title: 
+      label: Titre
+    path: 
+      label: Chemin
   max_per_page: 50
 
 builders:
   list:
     params:
-      title: Categories List
+      title: Liste des catégories
       display: [title, path]
       actions:
         new: ~
       object_actions:
         edit: ~
         delete: 
-          confirm: This will delete child categories if any. 
+          confirm: Ceci supprimera tous les enfants, le cas échéant. 
         up: 
-          label: Move up
+          label: Déplacer vers le haut
           route: category_mover_up
         down: 
-          label: Move down
+          label: Déplacer vers le bas
           route: category_mover_down
   filters:
     params:  
       display: []
   new:
     params:
-      title: New category
+      title: Nouvelle catégorie
       display: [title, parent, text]
       actions:
         list: ~
   edit:
     params:
-      title: You're editing the category "{{ Category.title }}"
+      title: Édition de la catégorie "{{ Category.title }}"
       display: [title, parent, text]
       actions:
         list: ~

@@ -86,12 +86,20 @@ class XmlArticleImporter extends AbstractImporter {
         }
 
         $item->setCategory($parent);
-        $item->setSynopsis($xml->synopsis->paragraph[0]);
+        $item->setSynopsis($this->formatSynopsis($xml->synopsis->paragraph[0]));
         $item->setTitle($xml->entete->titre->article);
         $item->setUrl($xml->entete->urlhttp);
         $item->setPath($path);
 
         $this->om->persist($item);
         $this->om->flush();
+    }
+    
+    private function formatSynopsis($text) {
+        $text = str_replace("\n", ' ', $text); 
+        $text = str_replace("\t", '',  $text); 
+        $text = str_replace('  ', ' ', $text); 
+        $text = trim($text); 
+        return $text;
     }
 }

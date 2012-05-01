@@ -3,12 +3,18 @@ params:
   model: TC\IndexBundle\Entity\Item
   namespace_prefix: TC
   bundle_name: IndexBundle
-  fields: ~
+  fields: 
+    title: 
+      label: Titre
+    url:
+      label: URL
+    category: 
+      label: Catégorie
 
 builders:
   list:
     params:
-      title: Items list
+      title: Liste des items
       display: [title, url, category]
       actions:
         new: ~
@@ -20,13 +26,13 @@ builders:
       display: [title, url, category]
   new:
     params:
-      title: New item
+      title: Nouvel item
       display: [title, url, synopsis, category]
       actions:
         list: ~
   edit:
     params:
-      title: You're editing the item "{{ Item.title }}"
+      title: Édition de l'item "{{ Item.title }}"
       display: [title, url, synopsis, category]
       actions:
         list: ~
