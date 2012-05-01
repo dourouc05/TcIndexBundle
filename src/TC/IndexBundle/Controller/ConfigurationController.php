@@ -43,14 +43,24 @@ class ConfigurationController extends Controller {
         
         if(count($options) != count(self::$availableOptions)) {
             foreach(self::$availableOptions as $c) {
+                $continue = false; 
+                foreach($options as $o) {
+                    if($o->getField() == $c[0]) {
+                        $continue = true;
+                        break; 
+                    }
+                }
+                
+                if($continue) {
+                    continue; 
+                }
+                
                 $o = new Configuration($c[0], $c[1], $c[2]);
                 $this->getDoctrine()->getEntityManager()->persist($o); 
                 $options[] = $o; 
             }
             
             $this->getDoctrine()->getEntityManager()->flush(); 
-        
-        return $this->render('TCIndexBundle:Default:installed.html.twig');
         }
         
         return $this->render('TCIndexBundle:Default:configuration.html.twig', array('options' => $options));
