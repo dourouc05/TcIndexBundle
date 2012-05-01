@@ -57,7 +57,16 @@ class GabaritExtension extends \Twig_Extension {
         );
     }
     
-    public function gabUp() {
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilters() {
+        return array(
+            'gab_up' => new \Twig_Filter_Method($this, 'gabUp', array('is_safe' => array('html'))),
+        );
+    }
+    
+    public function gabUp($css = '') {
         ob_start();
         $rubrique = $this->options['rubrique_id']; 
         $gabarit_utf8 = false; 
@@ -68,7 +77,7 @@ class GabaritExtension extends \Twig_Extension {
         } 
         $meta_description = $this->options['description']; 
         $meta_keywords = $this->options['mots-cles']; 
-        $urlCss = './css.css';
+        $urlCss = $css;
         include $_SERVER['DOCUMENT_ROOT'] . '/template/entete.php'; 
         return utf8_encode(ob_get_clean()); 
     }

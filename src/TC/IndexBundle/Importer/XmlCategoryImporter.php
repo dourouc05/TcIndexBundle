@@ -90,8 +90,8 @@ class XmlCategoryImporter extends AbstractImporter {
                     // This is the normal path of execution. 
                 
                     $cat = new Category(); 
-                    $cat->setTitle($accumulator . $c[$i] . '/'); 
-                    $cat->setPath($cat->getTitle()); 
+                    $cat->setPath($accumulator . $c[$i] . '/'); 
+                    $cat->setTitle(str_replace('tutoriels/', '', $cat->getPath())); 
 
                     try {
                         $parent = $this

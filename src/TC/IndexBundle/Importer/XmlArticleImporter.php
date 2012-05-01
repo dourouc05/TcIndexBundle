@@ -4,7 +4,7 @@ namespace TC\IndexBundle\Importer;
 
 use TC\IndexBundle\Entity\Category;
 use TC\IndexBundle\Entity\Item;
-use Doctrine\Common\Persistence\ObjectManager; 
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -19,71 +19,81 @@ use Symfony\Component\Finder\Finder;
  * @author Thibaut
  */
 class XmlArticleImporter extends AbstractImporter {
-    private $root; 
-    
+    private $root;
+
     public function __construct(ObjectManager $om, $root = '') {
         parent::__construct($om);
-        $this->root = $root; 
+        $this->root = $root;
     }
-    
+
     public function importFolder($folder) {
-        $finder = new Finder(); 
+        $finder = new Finder();
         $finder->in($this->root . '/' . $folder)
-               ->name('index.php')
-               ->files()
-               ->ignoreDotFiles(true);
-        
-        foreach($finder as $article) {
+                ->name('index.php')
+                ->files()
+                ->ignoreDotFiles(true);
+
+        foreach ($finder as $article) {
             $this->import(str_replace('index.php', '', $article->getRealpath()));
         }
     }
-    
+
     // Imports an article from the specified folder (index.php & most recent .xml). 
     public function import($folder) {
-        if(! file_exists($folder . '/index.php')) {
-            return; 
+        if (!file_exists($folder . '/index.php')) {
+            return;
         }
-        
-        $finder = new Finder(); 
+
+        $finder = new Finder();
         $finder->in($folder)
-               ->name('*.xml')
-               ->files()
-               ->ignoreDotFiles(true)
-               ->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
-                        return $a->getMTime() - $b->getMTime();
-                    });
-        
+                ->name('*.xml')
+                ->files()
+                ->ignoreDotFiles(true)
+                ->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
+                            return $a->getMTime() - $b->getMTime();
+                        });
+
         $xml = '';
-        foreach($finder as $x) {
-            $xml = $x->getRealpath(); 
-            break; 
+        foreach ($finder as $x) {
+            $xml = $x->getRealpath();
+            break;
         }
-        
+
         $xml = new \SimpleXMLElement(file_get_contents($xml));
-        
-        $path = str_replace(array($this->root . '/', $this->root . '\\', '\\'), array('', '', '/'), $folder); 
-        $path = explode('/', $path); 
+
+        $path = str_replace(array($this->root . '/', $this->root . '\\', '\\'), array('', '', '/'), $folder);
+        $path = explode('/', $path);
         array_pop($path); // Trailing slash
         array_pop($path); // Subfolder for the article
-        $path = implode('/', $path); 
+        $path = implode('/', $path);
         $path .= '/'; // To follow the convention for paths. 
-        
+
+        try {
+            $this->om
+                    ->createQuery('SELECT i FROM TCIndexBundle:Item i WHERE i.path = :p')
+                    ->setParameter('p', $path)
+                    ->getSingleResult();
+        }
+        catch (\Exception $e) {
+            return;
+        }
+
         $parent = $this->om
-                       ->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.path = :p')
-                       ->setParameter('p', $path)
-                       ->getSingleResult();
-        
-        $path = explode('developpez.com/', $xml->entete->urlhttp, 2); 
+                ->createQuery('SELECT c FROM TCIndexBundle:Category c WHERE c.path = :p')
+                ->setParameter('p', $path)
+                ->getSingleResult();
+
+        $path = explode('developpez.com/', $xml->entete->urlhttp, 2);
         $path = $path[1];
-        
-        $item = new Item(); 
-        $item->setCategory($parent); 
-        $item->setSynopsis($xml->synopsis->paragraph[0]); 
-        $item->setTitle($xml->entete->titre->article); 
-        $item->setUrl($xml->entete->urlhttp); 
-        $item->setPath($path); 
-        
+
+        $item = new Item();
+        $item->setCategory($parent);
+        $item->setSynopsis($xml->synopsis->paragraph[0]);
+        $item->setTitle($xml->entete->titre->article);
+        $item->setUrl($xml->entete->urlhttp);
+        $item->setPath($path);
+
         $this->om->persist($item);
-        $this->om->flush(); 
+        $this->om->flush();
     }
 }
