@@ -97,7 +97,7 @@ class HtmlFileImporter extends AbstractImporter
     
     private function doOneElement($data, $parent) {
         // <a href="http://qt.developpez.com/faq/">La FAQ Qt</a></li>
-        // Forget things like 
+        // Forget things like internal pointers: 
         // <a href="#qt-updater">Continuer son apprentissage de Qt par l'exemple : un updater avec Qt</a></li>
         
         if(strpos($data, 'href="#') !== false) {
@@ -112,15 +112,29 @@ class HtmlFileImporter extends AbstractImporter
         $url = $data[0]; 
         $data = $data[1]; 
         
+        // Get the path. 
+        $path = explode('developpez.com/', $url, 2); 
+        $path = 'tutoriels/' . $path[1]; 
+        
+        // Checks whether an article with the same path has already been created (based on the path). 
+        try {
+            $el = $this->om
+                       ->createQuery('SELECT i FROM TCIndexBundle:Item i WHERE i.path = :p')
+                       ->setParameter('p', $path)
+                       ->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $el = new Item(); 
+        }
+        
         // Get the title. 
         $data = explode('</a>', $data);
         $title = trim($data[0]); 
         unset($data);
         
         // Creates the entity. 
-        $el = new Item(); 
         $el->setCategory($parent);
         $el->setUrl($url);
+        $el->setPath($path);
         $el->setTitle($title);
         $this->om->persist($el); 
     }
