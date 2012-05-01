@@ -5,6 +5,7 @@ namespace TC\IndexBundle\Twig;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
 use Symfony\Bundle\DoctrineBundle\Registry; 
+use TC\IndexBundle\Controller\ConfigurationController; 
 
 /**
  * A Twig extension for Developpez.com template. 
@@ -24,6 +25,14 @@ class GabaritExtension extends \Twig_Extension {
         $this->options = array(); 
         foreach($options as $o) {
             $this->options[$o->getField()] = $o->getValue();
+        }
+        
+        if(count($options) != count(ConfigurationController::$availableOptions)) {
+            foreach(ConfigurationController::$availableOptions as $o) {
+                if(! array_key_exists($o[0], $this->options)) {
+                    $this->options[$o[0]] = $o[2];
+                }
+            }
         }
     }
     

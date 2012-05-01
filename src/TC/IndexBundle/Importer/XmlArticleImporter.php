@@ -73,11 +73,15 @@ class XmlArticleImporter extends AbstractImporter {
                        ->setParameter('p', $path)
                        ->getSingleResult();
         
+        $path = explode('developpez.com/', $xml->entete->urlhttp, 2); 
+        $path = $path[1];
+        
         $item = new Item(); 
         $item->setCategory($parent); 
         $item->setSynopsis($xml->synopsis->paragraph[0]); 
         $item->setTitle($xml->entete->titre->article); 
         $item->setUrl($xml->entete->urlhttp); 
+        $item->setPath($path); 
         
         $this->om->persist($item);
         $this->om->flush(); 

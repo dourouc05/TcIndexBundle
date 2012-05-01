@@ -12,7 +12,7 @@ builders:
   list:
     params:
       title: Categories List
-      display: [title, order]
+      display: [title, path]
       actions:
         new: ~
       object_actions:

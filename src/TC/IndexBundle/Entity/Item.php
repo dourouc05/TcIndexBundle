@@ -42,6 +42,16 @@ class Item
     private $synopsis;
 
     /**
+     * @var text $path
+     * 
+     * The category's path. For example: tutoriels/qt/. Must be relative to the domain's root and
+     * end with a slash. 
+     *
+     * @ORM\Column(type="text", nullable=true, unique=true)
+     */
+    private $path; 
+
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="items")
      * @ORM\OrderBy({"position" = "ASC"})
      */
@@ -116,6 +126,26 @@ class Item
     public function getSynopsis()
     {
         return $this->synopsis;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
     }
 
     /**

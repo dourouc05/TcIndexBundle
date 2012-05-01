@@ -2,7 +2,7 @@
 
 {% block title %}Importation d'index{% endblock %}
 
-{% block content %}
+{% block body %}
 <p>
     Quelle importation souhaitez-vous lancer ? 
 </p>
@@ -13,10 +13,10 @@
         </form>
     </li>
     <li>
-        <a href="{{ path("tc_index_importer_xmlcategoriesimport") }}">Importer les catégories à partir de l'arborescence, la racine étant <code>tutoriels</code>. </a>
+        <a href="{{ path("tc_index_importer_xmlcategoriesimport") }}">Importer les catégories à partir de l'arborescence, la racine étant <code>tutoriels</code> relativement à la racine du domaine. </a>
     </li>
     <li>
-        <a href="{{ path("tc_index_importer_xmlarticlesimport") }}">Importer les articles à partir de l'arborescence, la racine étant <code>tutoriels</code>. </a>
+        <a href="{{ path("tc_index_importer_xmlarticlesimport") }}">Importer les articles à partir de l'arborescence, la racine étant <code>tutoriels</code> relativement à la racine du domaine. </a>
     </li>
 </ul>
 {% endblock %}

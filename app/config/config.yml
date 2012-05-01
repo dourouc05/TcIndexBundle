@@ -75,7 +75,8 @@ fos_user:
     user_class: TC\IndexBundle\Entity\User
 
 admingenerator_generator:
-    base_admin_template: AdmingeneratorGeneratorBundle::base_admin_assetic_less.html.twig
+    knp_menu_class: TC\IndexBundle\Menu\AdminMenu
+    base_admin_template: TCIndexBundle:Default:_main.html.twig
     use_propel: false
     use_doctrine_orm: true
     use_doctrine_odm: false

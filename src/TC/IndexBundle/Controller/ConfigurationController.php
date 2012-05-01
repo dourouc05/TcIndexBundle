@@ -14,6 +14,17 @@ use TC\IndexBundle\Entity\Configuration;
  * @author Thibaut
  */
 class ConfigurationController extends Controller {
+    public static $availableOptions = 
+            array(
+                // Field, description, default value. 
+                array('rubrique_id', 'Numéro de la rubrique', '1'), 
+                array('licence', 'Licence', '1'), 
+                array('licence_auteur', 'Auteur', 'Thibaut Cuvelier'), 
+                array('titre', 'Titre de la page', 'Index'), 
+                array('mots-cles', 'Mots-clés', 'Index'), 
+                array('description', 'Description', 'Index'), 
+                );
+    
     /**
      * @Route("/") 
      */
@@ -22,26 +33,24 @@ class ConfigurationController extends Controller {
                         ->getRepository('TCIndexBundle:Configuration')
                         ->findAll();
         
-        if(count($options) == 0) {
-            $options[] = new Configuration('rubrique_id', 'Numéro de la rubrique', '1');
-            $options[] = new Configuration('licence', 'Licence', '1');
-            $options[] = new Configuration('licence_auteur', 'Auteur', 'Thibaut Cuvelier');
-            $options[] = new Configuration('titre', 'Titre de la page', 'Index');
-            $options[] = new Configuration('mots-cles', 'Mots-clés', 'Index');
-            $options[] = new Configuration('description', 'Description', 'Index');
-            
-            foreach($options as $o) {
-                $this->getDoctrine()->getEntityManager()->persist($o); 
-            }
-            $this->getDoctrine()->getEntityManager()->flush(); 
-        }
-        
         if ($request->getMethod() == 'POST') {
             foreach($options as $o) {
                 $o->setValue($_POST[$o->getField()]); 
                 $this->getDoctrine()->getEntityManager()->persist($o); 
             }
             $this->getDoctrine()->getEntityManager()->flush(); 
+        }
+        
+        if(count($options) != count(self::$availableOptions)) {
+            foreach(self::$availableOptions as $c) {
+                $o = new Configuration($c[0], $c[1], $c[2]);
+                $this->getDoctrine()->getEntityManager()->persist($o); 
+                $options[] = $o; 
+            }
+            
+            $this->getDoctrine()->getEntityManager()->flush(); 
+        
+        return $this->render('TCIndexBundle:Default:installed.html.twig');
         }
         
         return $this->render('TCIndexBundle:Default:configuration.html.twig', array('options' => $options));
