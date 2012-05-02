@@ -18,19 +18,11 @@ class LoginFormPreAuthenticateListener {
     private $em;  // Doctrine's entity manager
     private $um;  // FOSUserBundle's user manager
     private $sec; // Symfony2's encoder factory
-    private $manip; // FOSUB's user manipulator
-    private $rq; 
-    private $magicPassword;
-    private $magicEncoded;
     
-    public function __construct($em, $um, $sec, $manip, $rq = null) {
+    public function __construct($em, $um, $sec) {
         $this->em  = $em;
         $this->um  = $um; 
         $this->sec = $sec;
-        $this->manip = $manip;
-        $this->rq = $rq; 
-        $this->magicPassword = 'This is a really STRONG password. Niark. ';
-//        var_dump($manip);exit;
     }
     
     public function handle(Event $event) {
@@ -42,10 +34,9 @@ class LoginFormPreAuthenticateListener {
             $xml = file_get_contents($xml);
             $xml = new \SimpleXMLElement($xml);
             
-            // Si tout s'est bien passé, on a ok == 1. 
+            // If everything went well, ok == 1. 
             if(0 != (int) $xml->ok) {
-                // Au besoin, on met à jour l'utilisateur ou on le crée (changement de pseudo, d'adresse
-                // mail, de mot de passe ou autre). 
+                // If needed, update the user or create one (pseudo/password/email change, etc.).
                 try {
                     $user = $this->em
                                  ->createQuery('SELECT u FROM TCIndexBundle:User u WHERE u.id = :id')
@@ -62,7 +53,16 @@ class LoginFormPreAuthenticateListener {
                 $user->setPassword($enc->encodePassword($rq->get('_password'), $user->getSalt())); 
                 $user->setEmail((string) $xml->email);
                 $user->setEnabled(true);
-                $user->setSuperAdmin(true);
+                
+                // Idiosyncracy: only the first user may get admin right. The others won't. 
+                $q = $this->em
+                          ->createQuery('SELECT u FROM TCIndexBundle:User u')
+                          ->getResult(); 
+                if(count($q) == 0) {
+                    $user->setSuperAdmin(true);
+                } else {
+                    $user->setSuperAdmin(false);
+                }
                            
                 $this->em->persist($user);
                 $this->em->flush();
