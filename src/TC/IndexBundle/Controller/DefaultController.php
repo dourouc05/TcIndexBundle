@@ -23,7 +23,16 @@ class DefaultController extends Controller
     public function indexAction() {
         return $this->getIndexResponse(); 
     }
-//    security.context
+    
+    /**
+     * This is a natural URL, but not used by the application... Let's redirect. 
+     * 
+     * @Route("/index") 
+     */
+    public function subIndexAction() {
+        return $this->redirect($this->generateUrl('tc_index_default_admin'), 301);
+    }
+    
     /**
      * @Route("/index/no-cache") 
      */
