@@ -35,7 +35,7 @@
 
 [metadata]
     git=http://github.com/schmittjoh/metadata.git
-	
+    
 [SensioFrameworkExtraBundle]
     git=http://github.com/sensio/SensioFrameworkExtraBundle.git
     target=/bundles/Sensio/Bundle/FrameworkExtraBundle
@@ -44,14 +44,14 @@
 [JMSSecurityExtraBundle]
     git=http://github.com/schmittjoh/JMSSecurityExtraBundle.git
     target=/bundles/JMS/SecurityExtraBundle
-	version=1.1.0
-	
+    version=1.1.0
+    
 [JMSAopBundle]
-	git=http://github.com/schmittjoh/JMSAopBundle.git
+    git=http://github.com/schmittjoh/JMSAopBundle.git
     target=/bundles/JMS/AopBundle
 
 [JMSDiExtraBundle]
-	git=http://github.com/schmittjoh/JMSDiExtraBundle.git
+    git=http://github.com/schmittjoh/JMSDiExtraBundle.git
     target=/bundles/JMS/DiExtraBundle
 
 [SensioDistributionBundle]
@@ -112,13 +112,13 @@
     target=/bundles/Doctrine/Bundle/DoctrineBundle
 
 [cg]
-	git=http://github.com/schmittjoh/cg-library.git
-	target=/cg-library
+    git=http://github.com/schmittjoh/cg-library.git
+    target=/cg-library
 
 [FOSUserBundle]
     git=http://github.com/FriendsOfSymfony/FOSUserBundle.git
     target=bundles/FOS/UserBundle
-    version=1.1.0
+    version=1.2.0
 
 [AGUserBundle]
     git=http://github.com/cedriclombardot/AdmingeneratorUserBundle
