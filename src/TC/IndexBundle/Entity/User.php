@@ -17,9 +17,12 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    public function __construct()
-    {
-        parent::__construct();
+    
+    public function getId() {
+        return $this->id; 
+    }
+    
+    public function setId($id) {
+        $this->id = $id; 
     }
 }
