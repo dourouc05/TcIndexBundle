@@ -13,6 +13,12 @@ services:
             
     twig.extension.gabarit:
         class: TC\IndexBundle\Twig\GabaritExtension
-        arguments: [@doctrine]
+        arguments: [@doctrine] 
         tags:
             - { name: twig.extension }
+            
+    kernel.listener.dvp_authentication_listener: 
+        class: TC\IndexBundle\Listeners\LoginFormPreAuthenticateListener
+        arguments: [@doctrine.orm.entity_manager, @fos_user.user_manager, @security.encoder_factory]
+        tags: 
+            - { name: kernel.event_listener, priority: 100, event: kernel.request, method: handle }
