@@ -15,19 +15,20 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/") 
-     * @Cache(smaxage="3600", maxage="3600")
+     * @Cache(expires="+1 year")
      */
     public function indexAction() {
-        $cats = $this->getDoctrine()
-                     ->getRepository('TCIndexBundle:Category')
-                     ->findByDepth(0);
-        return $this->render('TCIndexBundle:ThemeDefault:index.html.twig', array('categories' => $cats));
+        return $this->getIndexResponse(); 
     }
     
     /**
      * @Route("/index/no-cache") 
      */
     public function indexNoCacheAction() {
+        return $this->getIndexResponse(); 
+    }
+    
+    private function getIndexResponse() {
         $cats = $this->getDoctrine()
                      ->getRepository('TCIndexBundle:Category')
                      ->findByDepth(0);
