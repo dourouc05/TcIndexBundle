@@ -71,6 +71,7 @@ class ConfigurationController extends Controller {
      */
     public function emptyCachesAction() {
         $this->emptyDir($this->get('kernel')->getCacheDir());
+        file_get_contents('http://' . $_SERVER['SERVER_NAME'] . str_replace('/empty-caches', '/', $_SERVER['REQUEST_URI'])); // warm up
         return $this->render('TCIndexBundle:Default:cacheEmptied.html.twig'); 
     }
     
