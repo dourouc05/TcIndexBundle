@@ -19,6 +19,7 @@ services:
             
     kernel.listener.dvp_authentication_listener: 
         class: TC\IndexBundle\Listeners\LoginFormPreAuthenticateListener
-        arguments: [@doctrine.orm.entity_manager, @fos_user.user_manager, @security.encoder_factory, @fos_user.util.user_manipulator]
+        scope: request
+        arguments: [@doctrine.orm.entity_manager, @fos_user.user_manager, @security.encoder_factory, @fos_user.util.user_manipulator, @request]
         tags: 
-            - { name: kernel.event_listener, priority: 100, event: kernel.request, method: handle }
+            - { name: kernel.event_listener, priority: 42100, event: kernel.request, method: handle }
