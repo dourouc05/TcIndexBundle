@@ -37,8 +37,6 @@ class DefaultController extends Controller
      * @Route("/index/no-cache") 
      */
     public function indexNoCacheAction() {
-        $sc = $this->get('security.context');
-        var_dump($sc->isGranted(array(new Expression('hasRole("ROLE_ADMIN")'))));
         return $this->getIndexResponse(); 
     }
     
