@@ -7,8 +7,8 @@
 <p style="font-size: 13px; line-height: 2.0;">
     Quelle importation souhaitez-vous lancer ? 
 </p>
-<ul style="font-size: 13px; line-height: 2.0; list-style-type: square; margin-left:50px;">
-    <li>
+<ul style="font-size: 13px; list-style-type: square; margin-left:50px;">
+    <li style="margin-bottom: 10px;">
         <form action="{{ path("tc_index_importer_htmlfileimport") }}" method="get">
             Importer un fichier HTML (chemin relativement à la racine du domaine ; importation des 
             articles et des catégories) : <input type="text" name="page"/>. 
@@ -19,15 +19,18 @@
             n'auront pas été manuellement associées. 
         </form>
     </li>
-    <li>
+    <li style="margin-bottom: 10px;">
         <a href="{{ path("tc_index_importer_xmlcategoriesimport") }}">Importer les catégories à 
             partir de l'arborescence, la racine étant <code>tutoriels</code> relativement à la 
             racine du domaine</a>. 
     </li>
-    <li>
+    <li style="margin-bottom: 10px;">
         <a href="{{ path("tc_index_importer_xmlarticlesimport") }}">Importer les articles à partir 
             de l'arborescence, la racine étant <code>tutoriels</code> relativement à la racine du 
-            domaine</a>. Il est nécessaire d'avoir importé les catégories auparavant. Les articles 
+            domaine</a>. <br/>
+            Il est nécessaire d'avoir importé les catégories auparavant (que ce soit en fonction de 
+            l'arborescence ou d'un autre fichier, mais il faut que les chemins aient été définis) : 
+            en effet, les assignations aux catégories se font en fonction des chemins. Les articles 
             mis à jour verront leurs enregistrements possiblement modifiés. 
     </li>
 </ul>
