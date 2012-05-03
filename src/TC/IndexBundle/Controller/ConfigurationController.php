@@ -23,7 +23,8 @@ class ConfigurationController extends Controller {
                 array('titre', 'Titre de la page', 'Index'), 
                 array('mots-cles', 'Mots-clés', 'Index'), 
                 array('description', 'Description', 'Index'), 
-                );
+                array('google-analytics', 'Compte Google Analytics', 'UA-6749412-2'), 
+              );
     
     /**
      * @Route("/") 
