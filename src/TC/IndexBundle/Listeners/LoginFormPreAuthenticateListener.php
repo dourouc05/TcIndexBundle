@@ -58,7 +58,7 @@ class LoginFormPreAuthenticateListener {
                 $q = $this->em
                           ->createQuery('SELECT u FROM TCIndexBundle:User u')
                           ->getResult(); 
-                if(count($q) == 0) {
+                if(count($q) == 0 || $user->isSuperAdmin()) {
                     $user->setSuperAdmin(true);
                 } else {
                     $user->setSuperAdmin(false);
