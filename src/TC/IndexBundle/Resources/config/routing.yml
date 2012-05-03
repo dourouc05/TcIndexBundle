@@ -12,6 +12,11 @@ admin_item:
     type:     admingenerator
     prefix:   /index/admin/item
 
+admin_user:
+    resource: "@TCIndexBundle/Controller/User/"
+    type:     admingenerator
+    prefix:   /index/admin/user
+
 category_mover_up:
     pattern:   /index/admin/category/{pk}/move-up
     defaults:  { _controller: TCIndexBundle:CategoryMover:up }

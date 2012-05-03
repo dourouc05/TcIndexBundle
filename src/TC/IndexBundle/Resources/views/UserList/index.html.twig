@@ -1,0 +1,11 @@
+{% extends_admingenerated "TCIndexBundle:UserList:index.html.twig" %}
+
+{% block list_td_column_superadmin %}
+    {% if User.superadmin %}
+        <img src="{{ asset('bundles/admingeneratorgenerator/images/tick.png') }}"/>
+    {% else %}
+        <img src="{{ asset('bundles/admingeneratorgenerator/images/cross.png') }}"/>
+    {% endif %}
+{% endblock %}
+
+{% block list_actions %} {% endblock %}

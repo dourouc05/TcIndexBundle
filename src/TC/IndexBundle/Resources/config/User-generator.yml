@@ -1,0 +1,37 @@
+generator: admingenerator.generator.doctrine
+params:
+  model: TC\IndexBundle\Entity\User
+  namespace_prefix: TC
+  bundle_name: IndexBundle
+  fields: 
+    username: 
+      label: Nom d'utilisateur
+    superadmin: 
+      label: Administrateur
+
+builders:
+  list:
+    params:
+      title: Utilisateurs
+      display: [username, superadmin]
+      actions:
+        new: 
+      object_actions:
+        edit: ~
+        delete: ~
+  filters:
+    params:
+      display: []
+  new:
+    params:
+      title: Nouvel utilisateur
+      display: []
+      actions:
+        list: ~
+  edit:
+    params:
+      title: Édition de l'utilisateur "{{ User.username }}"
+      display: []
+      actions:
+        list: ~
+  delete: ~
