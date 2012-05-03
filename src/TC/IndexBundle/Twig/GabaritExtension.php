@@ -78,6 +78,7 @@ class GabaritExtension extends \Twig_Extension {
         $meta_description = $this->options['description']; 
         $meta_keywords = $this->options['mots-cles']; 
         $urlCss = $css;
+        $GoogleAnalytics = $this->options['google-analytics'];
         include $_SERVER['DOCUMENT_ROOT'] . '/template/entete.php'; 
         return utf8_encode(ob_get_clean()); 
     }
