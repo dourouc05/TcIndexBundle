@@ -31,16 +31,24 @@ class AdminMenu {
         $menu->setchildrenAttributes(array('id' => 'main_navigation', 'class' => 'menu'));
         
         // Main menu
-        $help = $menu->addChild('Menu', array('uri' => '#'));
-        $help->setLinkAttributes(array('class' => 'sub main'));
-        $help->addChild('Accueil', array('route' => 'tc_index_default_admin'));
-        $help->addChild('Importer', array('route' => 'tc_index_importer_index'));
-        $help->addChild('Catégories', array('route' => 'TC_IndexBundle_Category_list'));
-        $help->addChild('Items', array('route' => 'TC_IndexBundle_Item_list'));
-        $help->addChild('Configuration', array('route' => 'tc_index_configuration_index'));
-        $help->addChild('Vider les caches', array('route' => 'tc_index_configuration_emptycaches'));
-        $help->addChild('Visualiser (avec caches)', array('route' => 'tc_index_default_index'));
-        $help->addChild('Visualiser (sans caches)', array('route' => 'tc_index_default_indexnocache'));
+        $main = $menu->addChild('Actions', array('route' => 'tc_index_default_admin'));
+        $main->setLinkAttributes(array('class' => 'sub main'));
+        $main->addChild('Accueil', array('route' => 'tc_index_default_admin'));
+        $main->addChild('Importer', array('route' => 'tc_index_importer_index'));
+        $main->addChild('Catégories', array('route' => 'TC_IndexBundle_Category_list'));
+        $main->addChild('Items', array('route' => 'TC_IndexBundle_Item_list'));
+        $main->addChild('Configuration', array('route' => 'tc_index_configuration_index'));
+        $main->addChild('Vider les caches', array('route' => 'tc_index_configuration_emptycaches'));
+        
+        // Visualize
+        $vis = $menu->addChild('Visualiser', array('route' => 'tc_index_default_indexnocache'));
+        $vis->setLinkAttributes(array('class' => 'sub main'));
+        $vis->addChild('Avec cache', array('route' => 'tc_index_default_index'));
+        $vis->addChild('Sans cache', array('route' => 'tc_index_default_indexnocache'));
+        
+        // Logout
+        $log = $menu->addChild('Déconnexion', array('route' => 'fos_user_security_logout'));
+        $log->setLinkAttributes(array('class' => 'sub main'));
         
         return $menu;
     }
