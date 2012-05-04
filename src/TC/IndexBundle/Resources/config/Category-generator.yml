@@ -25,10 +25,10 @@ builders:
           confirm: Ceci supprimera tous les enfants, le cas échéant. 
         up: 
           label: Déplacer vers le haut
-          route: category_mover_up
+          route: tc_index_category_list_up
         down: 
           label: Déplacer vers le bas
-          route: category_mover_down
+          route: tc_index_category_list_up
   filters:
     params:  
       display: []
