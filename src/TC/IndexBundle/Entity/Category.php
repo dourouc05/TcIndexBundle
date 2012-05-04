@@ -9,8 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  */
-class Category
-{
+class Category {
     // Below: useful fields. 
     
     /**

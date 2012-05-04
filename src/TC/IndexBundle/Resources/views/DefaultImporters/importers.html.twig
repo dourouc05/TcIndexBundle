@@ -16,7 +16,18 @@
             Attention ! Importer plusieurs fois un même fichier créera une série de catégories 
             vides. Les sections créées ne disposent pas d'un chemin : utiliser un autre importeur 
             automatique créera à nouveau des sections, potentiellement redondantes, tant qu'elles 
-            n'auront pas été manuellement associées. 
+            n'auront pas été manuellement associées à des chemins. 
+        </form>
+    </li>
+    <li style="margin-bottom: 10px;">
+        <form action="{{ path("tc_index_importer_coursfileimport") }}" method="get">
+            Importer un fichier cours du kit (chemin relativement à la racine du domaine ; 
+            importation des articles et des catégories) : <input type="text" name="page"/>. 
+            <input type="submit" value="Importer" /> <br/>
+            Attention ! Importer plusieurs fois un même fichier créera une série de catégories 
+            vides. Les sections créées ne disposent pas d'un chemin : utiliser un autre importeur 
+            automatique créera à nouveau des sections, potentiellement redondantes, tant qu'elles 
+            n'auront pas été manuellement associées à des chemins. 
         </form>
     </li>
     <li style="margin-bottom: 10px;">

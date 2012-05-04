@@ -9,8 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  */
-class Item
-{
+class Item {
     /**
      * @var integer $id
      *

@@ -5,8 +5,7 @@ namespace TC\IndexBundle\Importer;
 use TC\IndexBundle\Entity\Category;
 use TC\IndexBundle\Entity\Item;
 
-class HtmlFileImporter extends AbstractImporter
-{
+class HtmlFileImporter extends AbstractImporter {
     /** Expected format (without indentation): 
     
     <h2><a id="c">C</a></h2>
@@ -16,8 +15,7 @@ class HtmlFileImporter extends AbstractImporter
 	        </ul>
     
     **/
-    public function import($file)
-    {
+    public function import($file) {
         if(! file_exists($file)) {
             throw new \Exception('File ' . $file . ' does not exist. ');
         }
