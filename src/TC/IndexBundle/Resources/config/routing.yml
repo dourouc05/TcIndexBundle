@@ -22,6 +22,11 @@ admin_user:
     type:     admingenerator
     prefix:   /index/admin/user
 
+admin_user_adminswitcher:
+    resource: "@TCIndexBundle/Controller/User/"
+    type:     annotation
+    prefix:   /index/admin/user
+
 index:
     resource: "@TCIndexBundle/Controller/DefaultController.php"
     type:     annotation

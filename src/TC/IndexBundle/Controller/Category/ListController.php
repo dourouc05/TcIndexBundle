@@ -10,8 +10,7 @@ class ListController extends BaseListController
     private $em; 
     private $q; 
     
-    protected function getQuery()
-    {
+    protected function getQuery() {
         $query = $this->getDoctrine()
                     ->getEntityManager()
                     ->createQueryBuilder()
@@ -28,8 +27,7 @@ class ListController extends BaseListController
     /**
      * @Route("/{pk}/move-up")
      */
-    public function upAction($pk)
-    {
+    public function upAction($pk) {
         $id = $pk; 
         $this->getResult($id); 
         $this->q->pushAbove(); 

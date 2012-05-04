@@ -17,7 +17,8 @@ builders:
       actions:
         new: 
       object_actions:
-        edit: ~
+        edit: 
+          route: tc_index_user_list_switchsuperadmin
         delete: ~
   filters:
     params:
