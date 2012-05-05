@@ -30,13 +30,30 @@ class ImporterController extends Controller {
      * @Route("/html") 
      */
     public function htmlFileImportAction(Request $request) {
-        if ($request->getMethod() == 'GET') {
-            $importer = new HtmlFileImporter($this->getDoctrine()->getEntityManager()); 
-            $importer->import($_SERVER['DOCUMENT_ROOT'] . '/' . $_GET['page']); 
-            return $this->render('TCIndexBundle:DefaultImporters:htmlFileImporter.html.twig', array('page' => $_GET['page']));
+        $success = false; 
+        $error   = false; 
+        $this->get('session')->clearFlashes();
+        
+        if ($request->getMethod() == 'GET' && isset($_GET['page'])) {
+            try {
+                $importer = new HtmlFileImporter($this->getDoctrine()->getEntityManager()); 
+                $importer->import($_SERVER['DOCUMENT_ROOT'] . '/' . $_GET['page']); 
+
+                $success = $this->render('TCIndexBundle:DefaultImporters:htmlFileImporterSuccess.html.twig', array('page' => $_GET['page']))->getContent(); 
+            } catch(\Exception $e) {
+                $error = $e->getMessage();
+            }
+        } else {
+            $error = $this->render('TCIndexBundle:DefaultImporters:htmlFileImporterErrorRequest.html.twig')->getContent(); 
+        }
+        var_dump(get_class($this->get('session')));
+        if(! $error) {
+            $this->get('session')->setFlash('success', $success); 
+        } else {
+            $this->get('session')->setFlash('error', $error); 
         }
         
-        throw new \Exception('Would you have tried to get here by your own means?');
+        return $this->render('TCIndexBundle:DefaultImporters:importers.html.twig');
     }
     
     /**

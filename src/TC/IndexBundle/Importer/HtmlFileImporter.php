@@ -8,17 +8,17 @@ use TC\IndexBundle\Entity\Item;
 class HtmlFileImporter extends AbstractImporter {
     /** Expected format (without indentation): 
     
-    <h2><a id="c">C</a></h2>
-	    <h3><a id="mpir">MPIR</a></h3>
-	        <ul>
-	            <li><a href="http://tcuvelier.developpez.com/tutoriels/c/mpir/introduction/">Introduction à MPIR</a></li>
-	        </ul>
-    
+            <h2><a id="c">C</a></h2>
+                    <h3><a id="mpir">MPIR</a></h3>
+                        <ul>
+                            <li><a href="http://tcuvelier.developpez.com/tutoriels/c/mpir/introduction/">Introduction à MPIR</a></li>
+                        </ul>
     **/
     public function import($file) {
-        if(! file_exists($file)) {
-            throw new \Exception('File ' . $file . ' does not exist. ');
+        if(! file_exists($file) || ! is_file($file)) {
+            throw new \InvalidArgumentException('Importation de fichier HTML : le fichier <code>' . $file . '</code> n\'existe pas. ');
         }
+        
         $data = utf8_encode(file_get_contents($file));
         
         $data = explode('</h', $data, 2); 
