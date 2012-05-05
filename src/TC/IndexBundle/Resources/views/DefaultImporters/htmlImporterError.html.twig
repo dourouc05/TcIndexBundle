@@ -1,0 +1,8 @@
+<p>
+    {% if error is not defined %}
+        Importation de fichier HTML : impossible d'accéder à cette requête, il faut spécifier le 
+        fichier à importer.
+    {% else %}
+        {{ error|raw }}
+    {% endif %}
+</p>

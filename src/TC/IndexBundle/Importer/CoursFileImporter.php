@@ -19,11 +19,12 @@ class CoursFileImporter extends AbstractImporter {
     private $categories; 
     
     public function import($file) {
-        if(! file_exists($file)) {
-            throw new \Exception('File ' . $file . ' does not exist. ');
+        if(! file_exists($file) || ! is_file($file)) {
+            throw new NonExistantFileException('cours', $file);
         }
+        
         $data = file_get_contents($file);
-        $this->xml = new \SimpleXMLElement($data);
+        $this->xml = new \SimpleXMLElement($data); // takes care of the encoding
         
         $this->doCategories(); 
         $this->doArticles(); 

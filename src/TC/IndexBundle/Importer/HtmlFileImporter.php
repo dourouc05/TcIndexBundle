@@ -16,7 +16,7 @@ class HtmlFileImporter extends AbstractImporter {
     **/
     public function import($file) {
         if(! file_exists($file) || ! is_file($file)) {
-            throw new \InvalidArgumentException('Importation de fichier HTML : le fichier <code>' . $file . '</code> n\'existe pas. ');
+            throw new NonExistantFileException('HTML', $file);
         }
         
         $data = utf8_encode(file_get_contents($file));

@@ -1,0 +1,7 @@
+<p>
+    {% if error is not defined %}
+        Importation d'articles XML : erreur inconnue.
+    {% else %}
+        {{ error|raw }}
+    {% endif %}
+</p>

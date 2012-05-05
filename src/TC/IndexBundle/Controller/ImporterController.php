@@ -30,23 +30,73 @@ class ImporterController extends Controller {
      * @Route("/html") 
      */
     public function htmlFileImportAction(Request $request) {
+        return $this->basicScheme($request, 'html', function($em, $page) {
+            $importer = new HtmlFileImporter($em); 
+            $importer->import($_SERVER['DOCUMENT_ROOT'] . '/' . $page); 
+            return array('page' => $_GET['page']); 
+        }); 
+    }
+    
+    /**
+     * @Route("/cours") 
+     */
+    public function coursFileImportAction() {
+        return $this->basicScheme(null, 'cours', function($em) {
+            $importer = new CoursFileImporter($em); 
+            $importer->import($_SERVER['DOCUMENT_ROOT'] . '/' . $page); 
+            return array('page' => $_GET['page']); 
+        }); 
+    }
+    
+    /**
+     * @Route("/xml/categories") 
+     */
+    public function xmlCategoriesImportAction() {
+        return $this->basicScheme(null, 'xmlCategory', function($em) {
+            $importer = new XmlCategoryImporter($em, $_SERVER['DOCUMENT_ROOT']); 
+            $importer->import('tutoriels'); 
+            return array(); 
+        }); 
+    }
+    
+    /**
+     * @Route("/xml/articles") 
+     */
+    public function xmlArticlesImportAction() {
+        return $this->basicScheme(null, 'xmlCategory', function($em) {
+            $importer = new XmlArticleImporter($em, $_SERVER['DOCUMENT_ROOT']); 
+            $importer->import('tutoriels'); 
+            return array(); 
+        }); 
+    }
+    
+    private function basicScheme($request, $prefix, $importerClosure) {
         $success = false; 
         $error   = false; 
+        
+        $sucTpl = 'TCIndexBundle:DefaultImporters:' . $prefix . 'ImporterSuccess.html.twig'; 
+        $errTpl = 'TCIndexBundle:DefaultImporters:' . $prefix . 'ImporterError.html.twig'; 
+        
+        $em = $this->getDoctrine()->getEntityManager(); 
         $this->get('session')->clearFlashes();
         
-        if ($request->getMethod() == 'GET' && isset($_GET['page'])) {
+        // File importers need the request (non-null $request); batch importers do not (null $request). 
+        if (! $request || ($request->getMethod() == 'GET' && isset($_GET['page']))) {
             try {
-                $importer = new HtmlFileImporter($this->getDoctrine()->getEntityManager()); 
-                $importer->import($_SERVER['DOCUMENT_ROOT'] . '/' . $_GET['page']); 
-
-                $success = $this->render('TCIndexBundle:DefaultImporters:htmlFileImporterSuccess.html.twig', array('page' => $_GET['page']))->getContent(); 
+                if(isset($_GET['page'])) {
+                    $parameters = $importerClosure($em, $_GET['page']); 
+                } else {
+                    $parameters = $importerClosure($em); 
+                }
+                
+                $success    = $this->render($sucTpl, $parameters)->getContent(); 
             } catch(\Exception $e) {
-                $error = $e->getMessage();
+                $error = $this->render($errTpl, array('error' => $e->getMessage()))->getContent();
             }
         } else {
-            $error = $this->render('TCIndexBundle:DefaultImporters:htmlFileImporterErrorRequest.html.twig')->getContent(); 
+            $error = $this->render($errTpl)->getContent(); 
         }
-        var_dump(get_class($this->get('session')));
+        
         if(! $error) {
             $this->get('session')->setFlash('success', $success); 
         } else {
@@ -54,36 +104,5 @@ class ImporterController extends Controller {
         }
         
         return $this->render('TCIndexBundle:DefaultImporters:importers.html.twig');
-    }
-    
-    /**
-     * @Route("/cours") 
-     */
-    public function coursFileImportAction(Request $request) {
-        if ($request->getMethod() == 'GET') {
-            $importer = new CoursFileImporter($this->getDoctrine()->getEntityManager()); 
-            $importer->import($_SERVER['DOCUMENT_ROOT'] . '/' . $_GET['page']); 
-            return $this->render('TCIndexBundle:DefaultImporters:htmlFileImporter.html.twig', array('page' => $_GET['page']));
-        }
-        
-        throw new \Exception('Would you have tried to get here by your own means?');
-    }
-    
-    /**
-     * @Route("/xml/categories") 
-     */
-    public function xmlCategoriesImportAction() {
-        $importer = new XmlCategoryImporter($this->getDoctrine()->getEntityManager(), $_SERVER['DOCUMENT_ROOT']); 
-        $importer->import('tutoriels'); 
-        return $this->render('TCIndexBundle:DefaultImporters:xmlCategoryImporter.html.twig');
-    }
-    
-    /**
-     * @Route("/xml/articles") 
-     */
-    public function xmlArticlesImportAction() {
-        $importer = new XmlArticleImporter($this->getDoctrine()->getEntityManager(), 'C:\\Program Files (x86)\\EasyPHP-5.3.8.0\\www\\index'); 
-        $importer->importFolder('tutoriels'); 
-        return $this->render('TCIndexBundle:DefaultImporters:xmlArticleImporter.html.twig');
     }
 }
