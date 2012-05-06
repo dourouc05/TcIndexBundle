@@ -22,7 +22,7 @@ class DefaultController extends Controller
      * @Route("/") 
      */
     public function indexAction() {
-        return $this->getIndexResponse(); 
+        return $this->getIndexRender(); 
     }
     
     /**

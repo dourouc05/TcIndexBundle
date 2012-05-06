@@ -227,7 +227,7 @@ class Category {
      */
     public function setText($text)
     {
-        $this->text = $text;
+        $this->text = str_replace('\\"', '"', $text);
     }
 
     /**
@@ -237,7 +237,7 @@ class Category {
      */
     public function getText()
     {
-        return $this->text;
+        return str_replace('\\"', '"', $this->text);
     }
 
     /**

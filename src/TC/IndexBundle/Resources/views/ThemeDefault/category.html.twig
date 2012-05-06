@@ -2,9 +2,13 @@
     <h{{ category.depth + 1 }}>{{category.title}}</h{{ category.depth + 1 }}>
 {% endif %}
 
+{% autoescape false %}
+
+<div class="xo_contenu">
 {% if category.text %}
     {{ category.text | raw }}
 {% endif %}
+</div>
 
 {% if category.items %}
     <ul>
@@ -19,3 +23,5 @@
         {% include "TCIndexBundle:ThemeDefault:category.html.twig" with {'category': child} %}
     {% endfor %}
 {% endif %}
+
+{% endautoescape %}
