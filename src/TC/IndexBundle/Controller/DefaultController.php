@@ -21,7 +21,6 @@ class DefaultController extends Controller
      * 
      * @Route("/") 
      */
-    // * @Cache(maxage="31536000", smaxage="31536000", expires="+1 year")
     public function indexAction() {
         return $this->getIndexResponse(); 
     }
@@ -42,6 +41,7 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('tc_index_default_admin'), 301);
     }
     
+    // Implements a cache over getIndexRender() if available. 
     private function getIndexResponse() {
         if(function_exists('xcache_get')) {
             $cacheDriver = new \Doctrine\Common\Cache\XcacheCache();
@@ -64,8 +64,11 @@ class DefaultController extends Controller
         try {
             $theme = $this->getDoctrine()
                         ->getRepository('TCIndexBundle:Configuration')
-                        ->findOneByField('theme')
-                        ->getValue(); 
+                        ->findOneByField('theme'); 
+            if(! is_object($theme)) {
+                throw new \Exception(); 
+            }
+            $theme = $theme->getValue(); 
         } catch(\Exception $e) {
             $theme = 'Default';
         }

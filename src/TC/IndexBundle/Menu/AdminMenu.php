@@ -35,8 +35,8 @@ class AdminMenu {
         $main->setLinkAttributes(array('class' => 'sub main'));
         $main->addChild('Importer', array('route' => 'tc_index_importer_index'));
         $main->addChild('Catégories', array('route' => 'TC_IndexBundle_Category_list'));
-        $main->addChild('Utilisateurs', array('route' => 'TC_IndexBundle_User_list'));
         $main->addChild('Items', array('route' => 'TC_IndexBundle_Item_list'));
+        $main->addChild('Utilisateurs', array('route' => 'TC_IndexBundle_User_list'));
         $main->addChild('Configuration', array('route' => 'tc_index_configuration_index'));
         $main->addChild('Vider les caches', array('route' => 'tc_index_configuration_emptycaches'));
         

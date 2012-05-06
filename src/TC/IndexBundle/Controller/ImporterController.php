@@ -40,8 +40,8 @@ class ImporterController extends Controller {
     /**
      * @Route("/cours") 
      */
-    public function coursFileImportAction() {
-        return $this->basicScheme(null, 'cours', function($em) {
+    public function coursFileImportAction(Request $request) {
+        return $this->basicScheme($request, 'cours', function($em, $page) {
             $importer = new CoursFileImporter($em); 
             $importer->import($_SERVER['DOCUMENT_ROOT'] . '/' . $page); 
             return array('page' => $_GET['page']); 
@@ -51,7 +51,7 @@ class ImporterController extends Controller {
     /**
      * @Route("/xml/categories") 
      */
-    public function xmlCategoriesImportAction() {
+    public function xmlCategoriesImportAction(Request $request) {
         return $this->basicScheme(null, 'xmlCategory', function($em) {
             $importer = new XmlCategoryImporter($em, $_SERVER['DOCUMENT_ROOT']); 
             $importer->import('tutoriels'); 
@@ -62,10 +62,10 @@ class ImporterController extends Controller {
     /**
      * @Route("/xml/articles") 
      */
-    public function xmlArticlesImportAction() {
-        return $this->basicScheme(null, 'xmlCategory', function($em) {
+    public function xmlArticlesImportAction(Request $request) {
+        return $this->basicScheme(null, 'xmlArticle', function($em) {
             $importer = new XmlArticleImporter($em, $_SERVER['DOCUMENT_ROOT']); 
-            $importer->import('tutoriels'); 
+            $importer->importFolder('tutoriels'); 
             return array(); 
         }); 
     }

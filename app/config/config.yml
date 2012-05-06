@@ -49,10 +49,6 @@ doctrine:
         auto_mapping: true
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
-        # Production server only! 
-#        metadata_cache_driver: xcache
-#        query_cache_driver: xcache
-#        result_cache_driver: xcache
 
 # Swiftmailer Configuration
 swiftmailer:

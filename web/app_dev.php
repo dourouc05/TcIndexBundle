@@ -55,5 +55,12 @@ if(! file_exists($kernel->getCacheDir() . '/../../data/sqlite')) {
     var_dump('Base de données créée.');
 }
 
+// Last bits of cache
+if(function_exists('xcache_get')) {
+    $config = new \Doctrine\ORM\Configuration();
+    $config->setQueryCacheImpl(new \Doctrine\Common\Cache\XcacheCache());
+    $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ApcCache());
+}
+
 $kernel = new AppCache($kernel);
 $kernel->handle(Request::createFromGlobals())->send();
