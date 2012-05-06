@@ -7,23 +7,23 @@ Three entitites at the root of everything:
 
 The resulting page will look like this: 
 
-    <template>
-	<category 1>
-		<text>
-	<category 2>
-		<text>
-		<item 1>
-		<item 2>
-		<category 3>
-			<text>
-			<item 1>
-			<item 2>
-			<item 3>
-			<item 4>
-	<category 3>
-		<item 1>
-		<item 2>
-	<template>
+        <template>
+        <category 1>
+            <text>
+        <category 2>
+            <text>
+                <item 1>
+                <item 2>
+            <category 3>
+                <text>
+                <item 1>
+                <item 2>
+                <item 3>
+                <item 4>
+        <category 3>
+            <item 1>
+            <item 2>
+        <template>
 
 Current SQL queries to create the database (SQLite format, may be adapted for other DBMS): 
         CREATE TABLE Category (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, parent_id INTEGER DEFAULT NULL, title VARCHAR(255) NOT NULL, text CLOB DEFAULT NULL, path CLOB DEFAULT NULL, depth INTEGER NOT NULL, position INTEGER NOT NULL, disorder INTEGER NOT NULL);
@@ -45,3 +45,5 @@ Current limitations:
     no links, their content will be completely lost). 
 ### The database must be created manually (use the development front controller, which will check 
     whether the folders are writable when needed - cache and logs). 
+### The configuration is not checked: if you specify a non-existent theme, you'll get an exception
+    at runtime (or a blank page with the production front controller). 
