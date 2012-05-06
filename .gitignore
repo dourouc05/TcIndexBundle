@@ -2,4 +2,5 @@ app/cache
 app/logs
 web/bundles
 /vendor
-/nbproject/private/
+/nbproject/
+/vendor_light

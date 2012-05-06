@@ -69,7 +69,7 @@ class GabaritExtension extends \Twig_Extension {
     public function gabUp($css = '') {
         ob_start();
         $rubrique = $this->options['rubrique_id']; 
-        $gabarit_utf8 = false; 
+        $gabarit_utf8 = true; 
         $titre_page = $this->options['titre']; 
         // Administration pages are accessed by /... URLs, don't show the same title. 
         if(isset($_SERVER['PATH_INFO'])) {

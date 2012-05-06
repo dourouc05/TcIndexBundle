@@ -89,7 +89,7 @@ class ImporterController extends Controller {
                     $parameters = $importerClosure($em); 
                 }
                 
-                $success    = $this->render($sucTpl, $parameters)->getContent(); 
+                $success = $this->render($sucTpl, $parameters)->getContent(); 
             } catch(\Exception $e) {
                 $error = $this->render($errTpl, array('error' => $e->getMessage()))->getContent();
             }
