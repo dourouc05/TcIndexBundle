@@ -78,7 +78,6 @@ class GabaritExtension extends \Twig_Extension {
         $meta_description = $this->options['description']; 
         $meta_keywords = $this->options['mots-cles']; 
         $urlCss = $css;
-        $GoogleAnalytics = $this->options['google-analytics'];
         include $_SERVER['DOCUMENT_ROOT'] . '/template/entete.php'; 
         return utf8_encode(ob_get_clean()); 
     }
@@ -91,6 +90,7 @@ class GabaritExtension extends \Twig_Extension {
         $gabarit_utf8 = true; 
         $Auteur = $this->options['licence_auteur']; 
         $Annee = date('Y'); 
+        $GoogleAnalytics = $this->options['google-analytics'];
         include $_SERVER['DOCUMENT_ROOT'] . '/template/pied.php'; 
         return ob_get_clean(); 
     }

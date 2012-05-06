@@ -31,6 +31,7 @@ class ConfigurationController extends Controller {
      * @Route("/") 
      */
     public function indexAction(Request $request) {
+        $this->get('session')->clearFlashes(); 
         $options = $this->getDoctrine()
                         ->getRepository('TCIndexBundle:Configuration')
                         ->findAll();
@@ -74,9 +75,25 @@ class ConfigurationController extends Controller {
      * @Route("/empty-caches") 
      */
     public function emptyCachesAction() {
+        if(function_exists('xcache_unset')) {
+            xcache_unset('TCIndexBundle');
+        }
+        
+        return $this->render('TCIndexBundle:Default:cacheEmptied.html.twig'); 
+    }
+    
+    /**
+     * @Route("/hard-empty-caches") 
+     */
+    public function hardEmptyCachesAction() {
+        if(function_exists('xcache_unset')) {
+            xcache_unset('TCIndexBundle');
+        }
+        
         $this->emptyDir($this->get('kernel')->getCacheDir());
         file_get_contents('http://' . $_SERVER['SERVER_NAME'] . str_replace('/empty-caches', '/', $_SERVER['REQUEST_URI'])); // warm up
-        return $this->render('TCIndexBundle:Default:cacheEmptied.html.twig'); 
+        
+        return $this->render('TCIndexBundle:Default:hardCacheEmptied.html.twig'); 
     }
     
     private function emptyDir($dir, $deleteSelf = false) {
