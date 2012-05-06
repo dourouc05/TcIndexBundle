@@ -24,6 +24,7 @@ class ConfigurationController extends Controller {
                 array('mots-cles', 'Mots-clés', 'Index'), 
                 array('description', 'Description', 'Index'), 
                 array('google-analytics', 'Compte Google Analytics', 'UA-6749412-2'), 
+                array('theme', 'Thème à utiliser pour l\'affichage public', 'Default')
               );
     
     /**
@@ -40,6 +41,8 @@ class ConfigurationController extends Controller {
                 $this->getDoctrine()->getEntityManager()->persist($o); 
             }
             $this->getDoctrine()->getEntityManager()->flush(); 
+            
+            $this->get('session')->setFlash('success', "La configuration a bien été mise à jour. "); 
         }
         
         if(count($options) != count(self::$availableOptions)) {
